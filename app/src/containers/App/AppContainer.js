@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { App } from '../../components/App/App';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
-import { Page } from '../../components/Page/Page';
+import PageContainer from '../Page/PageContainer';
 
 
 class AppContainer extends Component {
@@ -10,7 +10,7 @@ class AppContainer extends Component {
         return (
             <App>
                 <Sidebar />
-                <Page />
+                <PageContainer />
             </App>
         );
     }
