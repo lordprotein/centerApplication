@@ -1,5 +1,12 @@
-.bg {
-    /* width: 80%; */
+.page {
     width: 100%;
-    background: #ffffff;
+    padding: 30px 50px;
+    padding-left: 350px;
+    background: #f9faff;
+}
+
+.titlePage {
+    font-size: 22px;
+    font-weight: bold;
+    color: #1e2432;
 }
