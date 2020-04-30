@@ -11,7 +11,7 @@ const RenderApp = () => {
         <Provider store={store}>
             <React.StrictMode>
                 <AppContainer />
-            </React.StrictMode>,
+            </React.StrictMode>
         </Provider>
     );
 }

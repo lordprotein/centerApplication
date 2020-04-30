@@ -1,0 +1,12 @@
+.bg {
+    display: flex;
+    flex-direction: row;
+    min-height: calc(100vh - 60px);
+    padding: 30px;
+    background: #c4f0fb;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}

@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import { App } from '../../components/App/App';
+import { Sidebar } from '../../components/Sidebar/Sidebar';
+import { Page } from '../../components/Page/Page';
 
-//dsada
+
 class AppContainer extends Component {
-   
+
     render() {
         return (
             <App>
-                <h1>Hello, world!</h1>
+                <Sidebar />
+                <Page />
             </App>
         );
     }

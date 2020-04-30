@@ -1,0 +1,7 @@
+.bgSidebar {
+    min-height: calc(100vh - 60px);
+    position: fixed;
+    width: 300px;
+    background: #1f295a;
+    border-top-right-radius: 85px;
+}
