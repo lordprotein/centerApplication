@@ -5,7 +5,7 @@ const cors = require('./node_modules/cors/lib')({
     origin: 'http://localhost:3000',
     credentials: true
 });
-const port = 3333;
+const port = 3001;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
