@@ -27,17 +27,21 @@ class BaseFuncService {
 
 class Service {
     constructor() {
-        this.baseFunc = new BaseFuncService();
+        this._baseFunc = new BaseFuncService();
     }
     
     //Get
     
-    getApplicationItem = (id) => {
-        return this.baseFunc.getResource(`/application/${id}`);
+    getApplItem = (id) => {
+        return this._baseFunc.getResource(`/application/${id}`);
     }
 
-    getApplicationList = (status) => {
-        return this.baseFunc.getResource(`/application/list/${status}`);
+    getApplList = (status) => {
+        return this._baseFunc.getResource(`/application/list/${status}`);
+    }
+
+    getAppListFree = () => {
+        return this._baseFunc.getResource(`/application/list/free`);
     }
 
     //Post
