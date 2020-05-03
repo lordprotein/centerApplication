@@ -1,5 +1,6 @@
 const initialState = {
     data: {
+        isAuthorization: false,
         userInfo: {
             name: '',
             role: '', //admin or executer
@@ -8,7 +9,7 @@ const initialState = {
         appPart: {
             name: '',
             list: [],
-            count: null,
+            count: 0,
         }
     },
     visible: {
