@@ -1,10 +1,10 @@
 import * as actionTypes from '../constants/actionTypes';
 
 
-export function createApplication(data) {
+export function setAppList(appList) {
     return {
-        type: actionTypes.CREATE_APPLICATION,
-        data
+        type: actionTypes.SET_APP_LIST,
+        appList
     }
 }
 
