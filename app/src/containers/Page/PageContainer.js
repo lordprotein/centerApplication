@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Page } from '../../components/Page/Page';
 import { ButtonAddApplication } from '../../components/Button/Button';
+import ApplicationListContainer from '../ApplicationList/ApplicationListContainer';
 
 
 class PageContainer extends Component {
@@ -9,6 +10,7 @@ class PageContainer extends Component {
         return (
             <Page title='New Page'>
                 <ButtonAddApplication />
+                <ApplicationListContainer />
             </Page>
         );
     }
