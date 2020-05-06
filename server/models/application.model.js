@@ -6,7 +6,7 @@ Application.create = (req, result) => {
     const { ID, date, fullName, caseNum, problem, phoneNum } = req.body;
     const varList = [ID, date, fullName, caseNum, problem, phoneNum];
 
-    db.query('INSERT INTO applications (ID, Date, `Full name`, `Case number`, Problem, `Phone number`) VALUES (?, ?, ?, ?, ?, ?)', varList, (err, res) => {
+    db.query('INSERT INTO applications (ID, date, full_name, case_num, problem, phone_num) VALUES (?, ?, ?, ?, ?, ?)', varList, (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);
@@ -30,7 +30,7 @@ Application.read = (req, result) => {
 Application.readList = (req, result) => {
     const { status } = req.params;
 
-    db.query('SELECT * FROM applications WHERE Status=?', status, (err, res) => {
+    db.query('SELECT * FROM applications WHERE status=?', status, (err, res) => {
         if (err) return result(err, null);
 
         if (res.length) return result(null, res);
@@ -45,7 +45,7 @@ Application.updatePriority = (req, result) => {
     const { id } = req.params;
     const varList = [priority, id];
 
-    db.query('UPDATE applications SET Priority=? WHERE ID=?', varList, (err, res) => {
+    db.query('UPDATE applications SET priority=? WHERE ID=?', varList, (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);
@@ -58,7 +58,7 @@ Application.updateStatus = (req, result) => {
     const { id } = req.params;
     const varList = [status, id];
 
-    db.query('UPDATE applications SET Status=? WHERE ID=?', varList, (err, res) => {
+    db.query('UPDATE applications SET status=? WHERE ID=?', varList, (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);
