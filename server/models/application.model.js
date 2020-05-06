@@ -3,10 +3,10 @@ const db = require('./db');
 const Application = app => { };
 
 Application.create = (req, result) => {
-    const { ID, date, fullName, caseNum, problem, phoneNum } = req.body;
-    const varList = [ID, date, fullName, caseNum, problem, phoneNum];
+    const { ID, date, fullName, caseNum, task, phoneNum } = req.body;
+    const varList = [ID, date, fullName, caseNum, task, phoneNum];
 
-    db.query('INSERT INTO applications (ID, date, full_name, case_num, problem, phone_num) VALUES (?, ?, ?, ?, ?, ?)', varList, (err, res) => {
+    db.query('INSERT INTO applications (ID, date, full_name, case_num, task, phone_num) VALUES (?, ?, ?, ?, ?, ?)', varList, (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);

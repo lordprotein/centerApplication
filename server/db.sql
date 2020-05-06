@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 06, 2020 at 01:36 PM
+-- Generation Time: May 06, 2020 at 04:19 PM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.1.32
 
@@ -34,7 +34,7 @@ CREATE TABLE `applications` (
   `priority` int(11) NOT NULL DEFAULT 1,
   `full_name` text NOT NULL,
   `case_num` int(1) NOT NULL,
-  `problem` text NOT NULL,
+  `task` text NOT NULL,
   `phone_num` varchar(12) NOT NULL,
   `status` varchar(20) NOT NULL DEFAULT 'Free'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -43,7 +43,7 @@ CREATE TABLE `applications` (
 -- Dumping data for table `applications`
 --
 
-INSERT INTO `applications` (`ID`, `date`, `priority`, `full_name`, `case_num`, `problem`, `phone_num`, `status`) VALUES
+INSERT INTO `applications` (`ID`, `date`, `priority`, `full_name`, `case_num`, `task`, `phone_num`, `status`) VALUES
 ('0f1ceb92-9cf1-47b4-8375-4861780a08ea', '2020-04-10', 3, 'Рафикова Шамзида Рюриковна', 2, 'Сломалось фамильное древо с логикой моего отчества', '+79170003322', 'Process'),
 ('a07fe628-ea11-4190-a6d7-d98b74273541', '2020-04-12', 5, 'Иванов Иван Иванович', 2, 'Почистить компьютер от вирусов', '+79191322456', 'Free'),
 ('ac6975b1-ea16-4fe2-bf3d-d2e7a480721b', '2020-04-14', 1, 'Хаммидулина Светлана Минизагитовна', 1, 'Сломался принтер', '+79871488594', 'Free'),
