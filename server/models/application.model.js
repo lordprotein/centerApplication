@@ -35,7 +35,7 @@ Application.readList = (req, result) => {
 
         if (res.length) return result(null, res);
 
-        result({ kind: 'not_found' }, null);
+        result(null, res);
     });
 }
 
