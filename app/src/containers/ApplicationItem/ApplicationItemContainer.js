@@ -3,7 +3,7 @@ import { ApplicationItem } from '../../components/ApplicationList/ApplicationIte
 
 
 class ApplicationItemContainer extends Component {
-
+    
     render() {
         const { data } = this.props;
 

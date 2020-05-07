@@ -10,7 +10,7 @@ import { setAppList } from '../../actions/applicationActions';
 
 class ApplicationListContainer extends Component {
     componentDidMount = () => {
-        const {setNewAppList} = this.props;
+        const { setNewAppList } = this.props;
 
         service.getAppListFree()
             .then(res => setNewAppList(res));

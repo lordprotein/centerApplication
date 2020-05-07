@@ -1,0 +1,37 @@
+.row {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    padding: 25px 20px;
+    margin: 5px 0;
+    background: #FFFFFF;
+    border-radius: 16px;
+    cursor: pointer;
+    box-shadow: -5px 3px 20px #f5f5f5;
+}
+
+.title {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #3f4558;
+    font-weight: 700;
+}
+
+.title:not(:first-of-type) {
+    width: 20%;
+}
+
+.title:not(:last-of-type)::after {
+    content: '';
+    display: block;
+    height: 100%;
+    margin: 0 15px;
+    /* border-right: 2px solid #000; */
+    border-right: 2px solid #f9faff;
+}
+.status {
+    color: #50caa1;
+    font-weight: 500;
+}
