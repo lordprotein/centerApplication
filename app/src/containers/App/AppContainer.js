@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { App } from '../../components/App/App';
-import { Sidebar } from '../../components/Sidebar/Sidebar';
 import PageContainer from '../Page/PageContainer';
+import SidebarContainer from '../Sidebar/SidebarContainer';
 
 
 class AppContainer extends Component {
@@ -9,7 +9,7 @@ class AppContainer extends Component {
     render() {
         return (
             <App>
-                <Sidebar />
+                <SidebarContainer />
                 <PageContainer />
             </App>
         );
