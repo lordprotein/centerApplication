@@ -1,14 +1,14 @@
 class SelectorsApp {
     list = ({ applications }) => {
-        return applications.data.appPart.list;
+        return applications.list;
     }
 
     name = ({ applications }) => {
-        return applications.data.appPart.name;
+        return applications.name;
     }
 
     count = ({ applications }) => {
-        return applications.data.appPart.count;
+        return applications.count;
     }
 }
 

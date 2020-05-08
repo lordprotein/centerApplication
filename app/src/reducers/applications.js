@@ -1,28 +1,21 @@
-import initialState from './initialState';
+import { initApplication } from './initialState';
 import * as types from '../constants/actionTypes';
 
-const applications = (state = initialState, action) => {
+const applications = (state = initApplication, action) => {
     switch (action.type) {
         case types.SET_APP_LIST: {
-            const { data, data: { appPart } } = state;
             const { appList } = action;
 
             return {
                 ...state,
-                data: {
-                    ...data,
-                    appPart: {
-                        ...appPart,
-                        list: appList,
-                        count: appList.length
-                    }
-                }
+                list: appList,
+                count: appList.length
             }
         }
-        
+
         case types.REMOVE_APPLICATION: {
             const { ID } = action;
-            const { data, data: { appPart, appPart: { list } } } = state;
+            const { list } = state;
 
 
             const numItem = list.findIndex(item => item.ID = ID);
@@ -31,13 +24,7 @@ const applications = (state = initialState, action) => {
 
             return {
                 ...state,
-                data: {
-                    ...data,
-                    appPart: {
-                        ...appPart,
-                        list: newAppList
-                    }
-                }
+                list: newAppList
             }
         }
         default: return state;
