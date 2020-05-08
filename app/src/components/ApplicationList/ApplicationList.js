@@ -16,7 +16,7 @@ export const ApplicationList = ({ itemList = [], children }) => {
                 <div>Статус</div>
             </div>
             {
-                itemList.map(item => {
+                itemList.length && itemList.map(item => {
                     return (
                         <ApplicationItemContainer
                             data={item}
@@ -24,6 +24,9 @@ export const ApplicationList = ({ itemList = [], children }) => {
                         />
                     );
                 })
+            }
+            {
+                itemList.length || <h2>Нет заявок</h2>
             }
             {/* {children} */}
         </div>
