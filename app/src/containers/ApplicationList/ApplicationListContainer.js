@@ -5,39 +5,47 @@ import { service } from '../../service/service';
 import { bindActionCreators } from 'redux';
 import { selectorApp } from '../../selectors/applications';
 import { setAppList } from '../../actions/applicationActions';
+import { withLoader } from '../../hoc/withLoader';
+import { updateStatusLoad } from '../../actions/loadActions';
+import { selectorsLoad } from '../../selectors/load';
 
 
 
 class ApplicationListContainer extends Component {
+
     componentDidMount = () => {
-        const { setNewAppList } = this.props;
+        const { setNewAppList, updateStatusLoad } = this.props;
 
         service.getAppListFree()
-            .then(res => setNewAppList(res));
+            .then(res => {
+                setNewAppList(res);
+                updateStatusLoad(false);
+            });
     }
 
 
-    render() {
-        const { appList } = this.props;
-        console.log(appList);
 
-        return (
-            <ApplicationList itemList={appList} />
-        );
+    render() {
+        const { appList, statusLoad } = this.props;
+
+        const ApplicationListWithLoader = withLoader(ApplicationList, statusLoad);
+
+        return <ApplicationListWithLoader itemList={appList} />
     }
 }
 
 
 const mapStateToProps = state => {
-    // console.log(state)
     return {
-        appList: selectorApp.list(state)
+        appList: selectorApp.list(state),
+        statusLoad: selectorsLoad.status(state)
     };
 }
 
 const mapDispatchToProps = dispatch => {
     return {
         setNewAppList: bindActionCreators(setAppList, dispatch),
+        updateStatusLoad: bindActionCreators(updateStatusLoad, dispatch),
     };
 }
 
