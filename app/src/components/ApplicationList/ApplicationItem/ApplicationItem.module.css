@@ -31,7 +31,19 @@
     /* border-right: 2px solid #000; */
     border-right: 2px solid #f9faff;
 }
-.status {
-    color: #50caa1;
+
+.statusFree, .statusProcess, .statusComplited {
     font-weight: 500;
+}
+
+.statusFree {
+    color: #50caa1;
+}
+
+.statusProcess {
+    color: #e2c626;
+}
+
+.statusComplited {
+color: #a813e2;
 }
