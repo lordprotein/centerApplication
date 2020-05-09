@@ -1,11 +1,9 @@
 import React from 'react';
 import styles from './ApplicationList.module.css';
-import ApplicationItemContainer from '../../containers/ApplicationItem/ApplicationItemContainer';
-import uniqid from 'uniqid';
 import stylesItem from './ApplicationItem/ApplicationItem.module.css';
 
 
-export const ApplicationList = ({ itemList = [], children }) => {
+export const ApplicationList = ({ children }) => {
     return (
         <div className={styles.appList}>
             <div className={styles.topLine}>
@@ -16,20 +14,7 @@ export const ApplicationList = ({ itemList = [], children }) => {
                 <div className={stylesItem.title}>Исполнитель(-ли)</div>
                 <div className={stylesItem.title}>Статус</div>
             </div>
-            {
-                itemList.length && itemList.map(item => {
-                    return (
-                        <ApplicationItemContainer
-                            data={item}
-                            key={uniqid()}
-                        />
-                    );
-                })
-            }
-            {
-                itemList.length || <h2>Нет заявок</h2>
-            }
-            {/* {children} */}
+            {children}
         </div>
     );
 }
