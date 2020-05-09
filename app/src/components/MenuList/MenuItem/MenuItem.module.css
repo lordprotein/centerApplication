@@ -1,0 +1,23 @@
+.item {
+    width: 80%;
+    margin: 6px 0;
+    padding: 10px 10px;
+    background: none;
+    border: none;
+    border-top-left-radius: 24px;
+    border-bottom-left-radius: 24px;
+    font-size: 20px;
+    color: #88a3e9;
+    text-align: start;
+    cursor: pointer;
+    transition: background 0.2s, padding 0.2s;
+    outline: none;
+
+}
+
+.item:hover {
+    padding: 28px 10px;
+    background: #4259c1;
+    color: #fff;
+    transition: background 0.1s, padding 0.2s;
+}
