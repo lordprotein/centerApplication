@@ -2,18 +2,19 @@ import React from 'react';
 import styles from './ApplicationList.module.css';
 import ApplicationItemContainer from '../../containers/ApplicationItem/ApplicationItemContainer';
 import uniqid from 'uniqid';
+import stylesItem from './ApplicationItem/ApplicationItem.module.css';
 
 
 export const ApplicationList = ({ itemList = [], children }) => {
     return (
         <div className={styles.appList}>
-            <div>
-                <div><input type='checkbox' /></div>
-                <div>Задача</div>
-                <div>Дата</div>
-                <div>Фио</div>
-                <div>Исполнитель(-ли)</div>
-                <div>Статус</div>
+            <div className={styles.topLine}>
+                <div className={stylesItem.title}><input type='checkbox' /></div>
+                <div className={stylesItem.title}>Задача</div>
+                <div className={stylesItem.title}>Дата</div>
+                <div className={stylesItem.title}>Фио</div>
+                <div className={stylesItem.title}>Исполнитель(-ли)</div>
+                <div className={stylesItem.title}>Статус</div>
             </div>
             {
                 itemList.length && itemList.map(item => {

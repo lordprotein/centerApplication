@@ -2,3 +2,10 @@
     width: 100%;
     color: #afb2c1;
 }
+
+.topLine {
+    display: flex;
+    flex-direction: row;
+    padding-left: 20px;
+    margin-bottom: 25px;
+}
