@@ -24,8 +24,7 @@ export const ApplicationItem = (props) => {
                 <div className={styles.title}>no name</div>
                 <div className={statusStyles}>{status}</div>
             </div>
-            {<MoreInfo {...props} />}
-            {/* {isSlideDown && <MoreInfo data={data} />} */}
+            {isSlideDown && <MoreInfo {...props} />}
         </div>
     );
 }
@@ -34,7 +33,7 @@ export const ApplicationItem = (props) => {
 
 const MoreInfo = ({ data, handleAccept }) => {
     const { date, task, name } = data;
-    
+
     return (
         <div className={styles.moreInfo}>
             <table>
