@@ -5,7 +5,7 @@ import { BtnAccept } from '../../Button/Button';
 
 
 export const ApplicationItem = (props) => {
-    const { handleClick, isSlideDown, handleAccept, data } = props;
+    const { handleClick, isSlideDown, data } = props;
     const { date, task, name } = data;
     let { status } = data;
 

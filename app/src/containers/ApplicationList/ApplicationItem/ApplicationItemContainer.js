@@ -8,12 +8,12 @@ import { bindActionCreators } from 'redux';
 
 class ApplicationItemContainer extends Component {
     state = {
-        slideDown: false
+        isSlideDown: false
     }
 
     handleClick = () => {
-        this.setState(({ slideDown }) => {
-            return { slideDown: !slideDown }
+        this.setState(({ isSlideDown }) => {
+            return { isSlideDown: !isSlideDown }
         })
     }
 
@@ -27,14 +27,14 @@ class ApplicationItemContainer extends Component {
 
     render() {
         const { data } = this.props;
-        const { slideDown } = this.state;
+        const { isSlideDown } = this.state;
 
         return (
             <ApplicationItem
                 data={data}
                 handleClick={this.handleClick}
                 handleAccept={this.handleAccept}
-                isSlideDown={slideDown}
+                isSlideDown={isSlideDown}
             />
         );
     }
