@@ -1,3 +1,6 @@
+import uniqid from 'uniqid';
+
+
 class BaseFuncService {
     constructor() {
         this.domen = 'http://localhost:3000';
@@ -49,6 +52,15 @@ class Service {
     }
 
     //Post
+
+    postAcceptApp = (id_executer, id_application) => {
+        const data = {
+            id: uniqid(),
+            id_application
+        }
+
+        return this._baseFunc.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
+    }
 }
 
 
@@ -56,7 +68,7 @@ class NormalizeApp {
     app = data => {
         return data.map(item => {
             const { ID, case_num, date, full_name, phone_num, priority, status, task } = item;
-            
+
             return {
                 id: ID,
                 caseNum: case_num,
