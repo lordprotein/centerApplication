@@ -1,16 +1,18 @@
 import React from 'react';
 import styles from './ApplicationItem.module.css';
 import { shortenName } from '../../../service/shortName';
-import { BtnAccept } from '../../Button/Button';
+import { Button } from '../../Button/Button';
+import { menuTitleList } from '../../../service/menuTitleList';
 
 
 export const ApplicationItem = (props) => {
     const { handleClick, isSlideDown, data } = props;
-    const { date, task, name } = data;
-    let { status } = data;
+    const { date, task, name, status } = data;
 
-    const statusStyles = chooseColorStatus(status);
-    status = renameStatus(status);
+    const statusStyles = statusProps(status).styles;
+    const transformStatus = statusProps(status).title;
+    const shortTask = shortenName(task);
+    const shortName = shortenName(name);
 
     return (
         <div className={styles.item}>
@@ -18,11 +20,11 @@ export const ApplicationItem = (props) => {
                 <div className={styles.title}>
                     <input type='checkbox' />
                 </div>
-                <div className={styles.title}>{shortenName(task)}</div>
+                <div className={styles.title}>{shortTask}</div>
                 <div className={styles.title}>{date}</div>
-                <div className={styles.title}>{shortenName(name)}</div>
+                <div className={styles.title}>{shortName}</div>
                 <div className={styles.title}>no name</div>
-                <div className={statusStyles}>{status}</div>
+                <div className={statusStyles}>{transformStatus}</div>
             </div>
             {isSlideDown && <MoreInfo {...props} />}
         </div>
@@ -31,8 +33,8 @@ export const ApplicationItem = (props) => {
 
 
 
-const MoreInfo = ({ data, handleAccept }) => {
-    const { date, task, name } = data;
+const MoreInfo = ({ data, handleBtns }) => {
+    const { date, status, task, name } = data;
 
     return (
         <div className={styles.moreInfo}>
@@ -57,34 +59,56 @@ const MoreInfo = ({ data, handleAccept }) => {
                 </tbody>
             </table>
             <div className={styles.btns}>
-                <BtnAccept
-                    title="Принять"
-                    click={handleAccept}
-                />
+                {statusProps(status).btnList(handleBtns)}
             </div>
         </div>
     )
 }
 
 
+const statusProps = (status) => {
+    switch (status) {
+        case menuTitleList[0].status: {
+            return {
+                title: 'Свободно',
+                styles: `${styles.title} ${styles.statusFree}`,
+                btnList: (handleBtns) => btnListFree(handleBtns)
+            }
+        }
 
-function renameStatus(statusName) {
-    switch (statusName) {
-        case 'free': return 'Свободно'
-        case 'process': return 'В процессе'
-        case 'complited': return 'Завершено'
+        case menuTitleList[1].status: {
+            return {
+                title: 'В процессе',
+                styles: `${styles.title} ${styles.statusProcess}`,
+                btnList: (handleBtns) => btnListProcess(handleBtns)
+            }
+        }
 
+        case menuTitleList[2].status: {
+            return {
+                title: 'Завершено',
+                styles: `${styles.title} ${styles.statusComplited}`,
+            }
+        }
         default: return;
     }
 }
 
 
-function chooseColorStatus(status) {
-    switch (status) {
-        case 'free': return `${styles.title} ${styles.statusFree}`;
-        case 'process': return `${styles.title} ${styles.statusProcess}`;
-        case 'complited': return `${styles.title} ${styles.statusComplited}`;
+const btnListFree = (handleBtns) => {
+    return (
+        <Button
+            title="Принять"
+            click={handleBtns.accept}
+        />
+    );
+}
 
-        default: return;
-    }
+const btnListProcess = (handleBtns) => {
+    return (
+        <Button
+            title="Отказаться"
+            click={handleBtns.reset}
+        />
+    );
 }

@@ -20,20 +20,29 @@ class ApplicationItemContainer extends Component {
     handleAccept = () => {
         const { data: { id }, removeApplication } = this.props;
 
-
+        console.log(1)
         service.postAcceptApp('386155e0-ffa7-4baf-adf8-2b88d8455e8e', id)
-            .then(res => removeApplication(id));
+            .then(() => removeApplication(id));
+    }
+
+    handleReset = () => {
+        
     }
 
     render() {
         const { data } = this.props;
         const { isSlideDown } = this.state;
 
+        const handleBtns = {
+            accept: this.handleAccept,
+            reset: this.handleReset
+        }
+
         return (
             <ApplicationItem
                 data={data}
                 handleClick={this.handleClick}
-                handleAccept={this.handleAccept}
+                handleBtns={handleBtns}
                 isSlideDown={isSlideDown}
             />
         );
