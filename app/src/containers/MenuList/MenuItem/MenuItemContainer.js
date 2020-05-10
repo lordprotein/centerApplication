@@ -1,23 +1,24 @@
 import React, { Component } from 'react';
 import { MenuItem } from '../../../components/MenuList/MenuItem/MenuItem';
 import { service } from '../../../service/service';
-import { setAppList } from '../../../actions/applicationActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectorApp } from '../../../selectors/applications';
 import { updateStatusLoad } from '../../../actions/loadActions';
 import { selectorsLoad } from '../../../selectors/load';
+import * as applicationActions from '../../../actions/applicationActions';
 
 
 class MenuItemContainer extends Component {
     handleClick = () => {
-        const { status, setNewAppList } = this.props;
+        const { status, setAppList, updateTitleOfPage, name } = this.props;
 
 
         this.wrapLoading(() => {
             service.getApplList(status)
                 .then(list => {
-                    return setNewAppList(list);
+                    updateTitleOfPage(name)
+                    return setAppList(list);
                 });
         })
     }
@@ -52,8 +53,14 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+    const {
+        setAppList,
+        updateTitleOfPage
+    } = bindActionCreators(applicationActions, dispatch);
+
     return {
-        setNewAppList: bindActionCreators(setAppList, dispatch),
+        setAppList,
+        updateTitleOfPage,
         updateStatusLoad: bindActionCreators(updateStatusLoad, dispatch),
     }
 }

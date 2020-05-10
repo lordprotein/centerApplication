@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { service } from '../../service/service';
 import { bindActionCreators } from 'redux';
 import { selectorApp } from '../../selectors/applications';
-import { setAppList } from '../../actions/applicationActions';
+import * as applicationActions from '../../actions/applicationActions';
 import { withLoader } from '../../hoc/withLoader';
 import { updateStatusLoad } from '../../actions/loadActions';
 import { selectorsLoad } from '../../selectors/load';
@@ -15,11 +15,12 @@ import ApplicationItemContainer from '../ApplicationItem/ApplicationItemContaine
 class ApplicationListContainer extends Component {
 
     componentDidMount = () => {
-        const { setNewAppList, updateStatusLoad } = this.props;
+        const { setAppList, updateStatusLoad, updateTitleOfPage } = this.props;
 
         service.getAppListFree()
             .then(res => {
-                setNewAppList(res);
+                setAppList(res);
+                updateTitleOfPage('Свободные')
                 updateStatusLoad(false);
             });
     }
@@ -63,8 +64,14 @@ const mapStateToProps = state => {
 }
 
 const mapDispatchToProps = dispatch => {
+    const {
+        setAppList,
+        updateTitleOfPage
+    } = bindActionCreators(applicationActions, dispatch)
+
     return {
-        setNewAppList: bindActionCreators(setAppList, dispatch),
+        setAppList,
+        updateTitleOfPage,
         updateStatusLoad: bindActionCreators(updateStatusLoad, dispatch),
     };
 }
