@@ -12,6 +12,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors);
 
 require('./routes/application.route')(app);
+require('./routes/executer.route')(app);
+
 
 app.get('/check', (req, res) => {
     res.send('Succsessful');
