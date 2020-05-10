@@ -14,3 +14,10 @@ export function removeApplication(ID) {
         ID
     }
 }
+
+export function updateTitleOfPage(title) {
+    return {
+        type: actionTypes.UPDATE_TITLE_PAGE,
+        title
+    }
+}

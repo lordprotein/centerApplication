@@ -27,6 +27,15 @@ const applications = (state = initApplication, action) => {
                 list: newAppList
             }
         }
+
+        case types.UPDATE_TITLE_PAGE: {
+            const { title } = action;
+
+            return {
+                ...state,
+                title
+            }
+        }
         default: return state;
     }
 }
