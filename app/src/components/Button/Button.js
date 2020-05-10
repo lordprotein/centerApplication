@@ -9,7 +9,7 @@ export const ButtonAddApplication = () => {
 }
 
 
-export const BtnAccept = ({ title, click }) => {
+export const Button = ({ title, click, styles }) => {
     return (
         <button onClick={click}>{title}</button>
     );
