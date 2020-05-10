@@ -9,7 +9,7 @@ import { withLoader } from '../../hoc/withLoader';
 import { updateStatusLoad } from '../../actions/loadActions';
 import { selectorsLoad } from '../../selectors/load';
 import uniqid from 'uniqid';
-import ApplicationItemContainer from '../ApplicationItem/ApplicationItemContainer';
+import ApplicationItemContainer from './ApplicationItem/ApplicationItemContainer';
 
 
 class ApplicationListContainer extends Component {
