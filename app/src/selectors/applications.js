@@ -3,8 +3,8 @@ class SelectorsApp {
         return applications.list;
     }
 
-    name = ({ applications }) => {
-        return applications.name;
+    title = ({ applications }) => {
+        return applications.title;
     }
 
     count = ({ applications }) => {

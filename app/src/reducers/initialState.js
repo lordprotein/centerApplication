@@ -1,5 +1,5 @@
 export const initApplication = {
-    name: 'Page',
+    title: 'Page',
     list: [],
     count: 0,
 }
