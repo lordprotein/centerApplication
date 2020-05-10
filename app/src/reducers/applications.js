@@ -17,10 +17,10 @@ const applications = (state = initApplication, action) => {
             const { ID } = action;
             const { list } = state;
 
+            const numItem = list.findIndex(item => item.id === ID);
 
-            const numItem = list.findIndex(item => item.ID = ID);
+            const newAppList = [...list.slice(0, numItem), ...list.slice(numItem + 1)];
 
-            const newAppList = [...list.slice(0, list[numItem]), ...list.slice(list[numItem + 1])];
 
             return {
                 ...state,
