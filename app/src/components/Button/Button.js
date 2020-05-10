@@ -7,3 +7,10 @@ export const ButtonAddApplication = () => {
         <button className={styles.btnAddApplication}></button>
     );
 }
+
+
+export const BtnAccept = ({ title, click }) => {
+    return (
+        <button onClick={click}>{title}</button>
+    );
+}
