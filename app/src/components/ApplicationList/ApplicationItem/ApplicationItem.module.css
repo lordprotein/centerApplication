@@ -1,13 +1,16 @@
-.row {
-    display: flex;
-    flex-direction: row;
+.item {
     width: 100%;
     padding: 25px 20px;
     margin: 5px 0;
     background: #FFFFFF;
     border-radius: 16px;
-    cursor: pointer;
     box-shadow: -5px 3px 20px #f5f5f5;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    cursor: pointer;
 }
 
 .title {

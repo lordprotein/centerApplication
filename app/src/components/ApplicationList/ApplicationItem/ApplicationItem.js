@@ -1,9 +1,11 @@
 import React from 'react';
 import styles from './ApplicationItem.module.css';
 import { shortenName } from '../../../service/shortName';
+import { BtnAccept } from '../../Button/Button';
 
 
-export const ApplicationItem = ({ data }) => {
+export const ApplicationItem = (props) => {
+    const { handleClick, isSlideDown, handleAccept, data } = props;
     const { date, task, name } = data;
     let { status } = data;
 
@@ -11,18 +13,60 @@ export const ApplicationItem = ({ data }) => {
     status = renameStatus(status);
 
     return (
-        <div className={styles.row}>
-            <div className={styles.title}>
-                <input type='checkbox' />
+        <div className={styles.item}>
+            <div className={styles.row} onClick={handleClick}>
+                <div className={styles.title}>
+                    <input type='checkbox' />
+                </div>
+                <div className={styles.title}>{shortenName(task)}</div>
+                <div className={styles.title}>{date}</div>
+                <div className={styles.title}>{shortenName(name)}</div>
+                <div className={styles.title}>no name</div>
+                <div className={statusStyles}>{status}</div>
             </div>
-            <div className={styles.title}>{shortenName(task)}</div>
-            <div className={styles.title}>{date}</div>
-            <div className={styles.title}>{shortenName(name)}</div>
-            <div className={styles.title}>no name</div>
-            <div className={statusStyles}>{status}</div>
+            {<MoreInfo {...props} />}
+            {/* {isSlideDown && <MoreInfo data={data} />} */}
         </div>
     );
 }
+
+
+
+const MoreInfo = ({ data, handleAccept }) => {
+    const { date, task, name } = data;
+    
+    return (
+        <div className={styles.moreInfo}>
+            <table>
+                <tbody>
+                    <tr>
+                        <td>Дата</td>
+                        <td>{date}</td>
+                    </tr>
+                    <tr>
+                        <td>Задача</td>
+                        <td>{task}</td>
+                    </tr>
+                    <tr>
+                        <td>ФИО заявителя</td>
+                        <td>{name}</td>
+                    </tr>
+                    <tr>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div className={styles.btns}>
+                <BtnAccept
+                    title="Принять"
+                    click={handleAccept}
+                />
+            </div>
+        </div>
+    )
+}
+
 
 
 function renameStatus(statusName) {
@@ -36,16 +80,7 @@ function renameStatus(statusName) {
 }
 
 
-// function comboStyle(style) {
-//     const styleList = {
-
-//     }
-
-//     return styleList[style];
-// }
-
 function chooseColorStatus(status) {
-    console.log(status)
     switch (status) {
         case 'free': return `${styles.title} ${styles.statusFree}`;
         case 'process': return `${styles.title} ${styles.statusProcess}`;
