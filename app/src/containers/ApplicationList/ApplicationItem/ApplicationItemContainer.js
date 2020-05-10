@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { ApplicationItem } from '../../components/ApplicationList/ApplicationItem/ApplicationItem';
-import { service } from '../../service/service';
-import { removeApplication } from '../../actions/applicationActions';
+import { ApplicationItem } from '../../../components/ApplicationList/ApplicationItem/ApplicationItem';
+import { service } from '../../../service/service';
+import { removeApplication } from '../../../actions/applicationActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
@@ -20,10 +20,9 @@ class ApplicationItemContainer extends Component {
     handleAccept = () => {
         const { data: { id }, removeApplication } = this.props;
 
-        // console.log(id)
-        removeApplication(id);
-        // service.postAcceptApp('386155e0-ffa7-4baf-adf8-2b88d8455e8e', data.id)
-        // .then(res => console.log(res))
+
+        service.postAcceptApp('386155e0-ffa7-4baf-adf8-2b88d8455e8e', id)
+            .then(res => removeApplication(id));
     }
 
     render() {
