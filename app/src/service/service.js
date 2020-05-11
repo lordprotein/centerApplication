@@ -69,9 +69,12 @@ class Service {
 
     //Delete
 
-    resetAppOfExecuter = (id_executer, id_application) => {
-        return this._baseFunc.methodRequset(`/executer/application/reset/${id_executer}/${id_application}`, 'DELETE');
+    resetAppOfExecuter = (userID, appID) => {
+        return this._baseFunc.methodRequset(`/executer/application/reset/${userID}/${appID}`, 'DELETE');
+    }
 
+    removeAppItem = (userID) => {
+        return this._baseFunc.methodRequset(`/application/${userID}`, 'DELETE');
     }
 }
 

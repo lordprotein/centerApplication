@@ -5,6 +5,7 @@ import { removeApplication } from '../../../actions/applicationActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectorsUser } from '../../../selectors/user';
+import { menuTitleList } from '../../../service/menuTitleList';
 
 
 class ApplicationItemContainer extends Component {
@@ -12,11 +13,13 @@ class ApplicationItemContainer extends Component {
         isSlideDown: false
     }
 
+
     handleClick = () => {
         this.setState(({ isSlideDown }) => {
             return { isSlideDown: !isSlideDown }
         })
     }
+
 
     handleAccept = () => {
         const { data: { id }, removeApplication, userID } = this.props;
@@ -25,30 +28,50 @@ class ApplicationItemContainer extends Component {
             .then(() => removeApplication(id));
     }
 
+
     handleReset = () => {
         const { data: { id }, removeApplication, userID } = this.props;
 
         service.resetAppOfExecuter(userID, id)
-            .then(res => {
-                removeApplication(id);
-                console.log(res);
-            })
+            .then(() => removeApplication(id))
     }
 
+
+    handleRemove = () => {
+        const { data: { id }, removeApplication } = this.props;
+
+        service.removeAppItem(id)
+            .then(() => removeApplication(id));
+    }
+
+
+    filterHandle = () => {
+        const { data: { status } } = this.props;
+        const accept = this.handleAccept;
+        const reset = this.handleReset;
+        const remove = this.handleRemove;
+
+        switch (status) {
+            case menuTitleList[0].status: {
+                return { accept, remove };
+            }
+            case menuTitleList[1].status: {
+                return { reset, remove };
+            }
+            default: return;
+        }
+    }
+
+    
     render() {
         const { data } = this.props;
         const { isSlideDown } = this.state;
-
-        const handleBtns = {
-            accept: this.handleAccept,
-            reset: this.handleReset
-        }
 
         return (
             <ApplicationItem
                 data={data}
                 handleClick={this.handleClick}
-                handleBtns={handleBtns}
+                handleBtns={this.filterHandle()}
                 isSlideDown={isSlideDown}
             />
         );

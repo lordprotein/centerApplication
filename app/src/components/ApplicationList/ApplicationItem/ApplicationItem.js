@@ -84,12 +84,6 @@ const statusProps = (status) => {
             }
         }
 
-        case menuTitleList[2].status: {
-            return {
-                title: 'Завершено',
-                styles: `${styles.title} ${styles.statusComplited}`,
-            }
-        }
         default: return;
     }
 }
@@ -97,18 +91,30 @@ const statusProps = (status) => {
 
 const btnListFree = (handleBtns) => {
     return (
-        <Button
-            title="Принять"
-            click={handleBtns.accept}
-        />
+        <>
+            <Button
+                title="Принять"
+                click={handleBtns.accept}
+            />
+            <Button
+                title="Удалить"
+                click={handleBtns.remove}
+            />
+        </>
     );
 }
 
 const btnListProcess = (handleBtns) => {
     return (
-        <Button
-            title="Отказаться"
-            click={handleBtns.reset}
-        />
+        <>
+            <Button
+                title="Отказаться"
+                click={handleBtns.reset}
+            />
+            <Button
+                title="Удалить"
+                click={handleBtns.remove}
+            />
+        </>
     );
 }
