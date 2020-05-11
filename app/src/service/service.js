@@ -51,7 +51,7 @@ class Service {
         else {
             path = `/application/list/${status}`;
         }
-        console.log(path)
+        
         const res = await this._baseFunc.getResource(path);
         return this._normalizeApp.app(res);
     }
