@@ -1,4 +1,5 @@
 import uniqid from 'uniqid';
+import { menuTitleList } from './menuTitleList';
 
 
 class BaseFuncService {
@@ -41,13 +42,17 @@ class Service {
         return this._normalizeApp.app(res);
     }
 
-    getApplList = async (status) => {
-        const res = await this._baseFunc.getResource(`/application/list/${status}`);
-        return this._normalizeApp.app(res);
-    }
+    getApplList = async (status, userID = null) => {
+        let path;
 
-    getAppListFree = async () => {
-        const res = await this._baseFunc.getResource(`/application/list/free`);
+        if (userID && status !== menuTitleList[0].status) {
+            path = `/executer/application/list/${status}/${userID}`
+        }
+        else {
+            path = `/application/list/${status}`;
+        }
+        console.log(path)
+        const res = await this._baseFunc.getResource(path);
         return this._normalizeApp.app(res);
     }
 
