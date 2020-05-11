@@ -10,14 +10,15 @@ import { updateStatusLoad } from '../../actions/loadActions';
 import { selectorsLoad } from '../../selectors/load';
 import uniqid from 'uniqid';
 import ApplicationItemContainer from './ApplicationItem/ApplicationItemContainer';
+import { selectorsUser } from '../../selectors/user';
 
 
 class ApplicationListContainer extends Component {
 
     componentDidMount = () => {
-        const { setAppList, updateStatusLoad, updateTitleOfPage } = this.props;
+        const { setAppList, updateStatusLoad, updateTitleOfPage, userID } = this.props;
 
-        service.getAppListFree()
+        service.getApplList('free', userID)
             .then(res => {
                 setAppList(res);
                 updateTitleOfPage('Свободные')
@@ -59,7 +60,8 @@ class ApplicationListContainer extends Component {
 const mapStateToProps = state => {
     return {
         appList: selectorApp.list(state),
-        statusLoad: selectorsLoad.status(state)
+        statusLoad: selectorsLoad.status(state),
+        userID: selectorsUser.id(state)
     };
 }
 

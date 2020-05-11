@@ -7,15 +7,16 @@ import { selectorApp } from '../../../selectors/applications';
 import { updateStatusLoad } from '../../../actions/loadActions';
 import { selectorsLoad } from '../../../selectors/load';
 import * as applicationActions from '../../../actions/applicationActions';
+import { selectorsUser } from '../../../selectors/user';
 
 
 class MenuItemContainer extends Component {
     handleClick = () => {
         const { status, setAppList, updateTitleOfPage, name } = this.props;
-
+        let { userID } = this.props;
 
         this.wrapLoading(() => {
-            service.getApplList(status)
+            service.getApplList(status, userID)
                 .then(list => {
                     updateTitleOfPage(name)
                     return setAppList(list);
@@ -47,8 +48,8 @@ class MenuItemContainer extends Component {
 const mapStateToProps = state => {
     return {
         appList: selectorApp.list(state),
-        statusLoad: selectorsLoad.status(state)
-
+        statusLoad: selectorsLoad.status(state),
+        userID: selectorsUser.id(state)
     }
 }
 

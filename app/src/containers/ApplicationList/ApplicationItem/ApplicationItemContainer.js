@@ -4,6 +4,7 @@ import { service } from '../../../service/service';
 import { removeApplication } from '../../../actions/applicationActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { selectorsUser } from '../../../selectors/user';
 
 
 class ApplicationItemContainer extends Component {
@@ -18,16 +19,16 @@ class ApplicationItemContainer extends Component {
     }
 
     handleAccept = () => {
-        const { data: { id }, removeApplication } = this.props;
+        const { data: { id }, removeApplication, userID } = this.props;
 
-        console.log(1)
-        service.postAcceptApp('386155e0-ffa7-4baf-adf8-2b88d8455e8e', id)
+        service.postAcceptApp(userID, id)
             .then(() => removeApplication(id));
     }
 
     handleReset = () => {
-        const { data: { id }, removeApplication } = this.props;
-        service.resetAppOfExecuter('9ad94158-c2e3-4aa5-929c-6cdef375587d', id)
+        const { data: { id }, removeApplication, userID } = this.props;
+
+        service.resetAppOfExecuter(userID, id)
             .then(res => {
                 removeApplication(id);
                 console.log(res);
@@ -55,6 +56,13 @@ class ApplicationItemContainer extends Component {
 }
 
 
+const mapStateToProps = state => {
+    return {
+        userID: selectorsUser.id(state)
+    }
+}
+
+
 const mapDispatchToProps = dispatch => {
     return {
         removeApplication: bindActionCreators(removeApplication, dispatch)
@@ -62,4 +70,4 @@ const mapDispatchToProps = dispatch => {
 }
 
 
-export default connect(null, mapDispatchToProps)(ApplicationItemContainer);
+export default connect(mapStateToProps, mapDispatchToProps)(ApplicationItemContainer);
