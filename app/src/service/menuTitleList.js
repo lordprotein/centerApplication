@@ -1,14 +1,14 @@
 export const menuTitleList = [
     {
-        name: 'Свободные',
+        titleMenu: 'Свободные',
         status: 'free'
     },
     {
-        name: 'В процессе',
+        titleMenu: 'В процессе',
         status: 'process'
     },
     {
-        name: 'Завершенные',
+        titleMenu: 'Завершенные',
         status: 'completed'
     },
 ];

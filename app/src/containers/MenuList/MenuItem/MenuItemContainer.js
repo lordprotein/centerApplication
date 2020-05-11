@@ -12,13 +12,13 @@ import { selectorsUser } from '../../../selectors/user';
 
 class MenuItemContainer extends Component {
     handleClick = () => {
-        const { status, setAppList, updateTitleOfPage, name } = this.props;
+        const { status, setAppList, updateTitleOfPage, titleMenu } = this.props;
         let { userID } = this.props;
 
         this.wrapLoading(() => {
             service.getApplList(status, userID)
                 .then(list => {
-                    updateTitleOfPage(name)
+                    updateTitleOfPage(titleMenu)
                     return setAppList(list);
                 });
         })
@@ -32,13 +32,22 @@ class MenuItemContainer extends Component {
         updateStatusLoad(false);
     }
 
+
+    isActiveMenu = () => {
+        const { titleMenu, titlePage } = this.props;
+
+        return titleMenu === titlePage ? true : false;
+    }
+
+    
     render() {
-        const { name } = this.props;
+        const { titleMenu } = this.props;
 
         return (
             <MenuItem
-                name={name}
+                titleMenu={titleMenu}
                 action={this.handleClick}
+                activeMenu={this.isActiveMenu()}
             />
         );
     }
@@ -49,7 +58,8 @@ const mapStateToProps = state => {
     return {
         appList: selectorApp.list(state),
         statusLoad: selectorsLoad.status(state),
-        userID: selectorsUser.id(state)
+        userID: selectorsUser.id(state),
+        titlePage: selectorApp.title(state)
     }
 }
 
