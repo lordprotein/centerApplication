@@ -61,3 +61,24 @@ exports.readApplications = (req, res) => {
         }
     });
 }
+
+
+exports.delete = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: 'Content can not be empty!'
+        });
+    }
+
+    Executer.delete(req, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message:
+                    err.message || 'Some error occurred while deleting the Application.'
+            });
+        }
+        else {
+            res.send(data);
+        }
+    });
+}

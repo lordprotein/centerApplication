@@ -4,7 +4,7 @@ const Executer = () => { };
 
 Executer.read = (req, result) => {
     const { id } = req.params;
-    
+
     db.query('SELECT executers.full_name, roles.role FROM executers INNER JOIN roles WHERE executers.ID_ROLE = roles.ID AND executers.ID = ?', id, (err, res) => {
         if (err) return result(err, null);
 
@@ -42,8 +42,28 @@ Executer.create = (req, result) => {
                 return result(err, null);
             }
 
-            result(null, {status: 'successful'});
+            result(null, { status: 'successful' });
         })
+    });
+}
+
+
+Executer.delete = (req, result) => {
+    const { appID, userID } = req.params;
+    db.query('DELETE FROM applications_of_executers WHERE ID_APPLICATION = ? AND ID_EXECUTER = ?', [appID, userID], (err, res) => {
+        if (err) return result(err, null);
+
+        db.query('SELECT * FROM applications_of_executers WHERE ID_APPLICATION = ?', [appID], (err, res) => {
+            if (err) return result(err, null);
+
+            if (res.length) return result(null, { status: 'successful' });
+
+            db.query('UPDATE applications SET status=? WHERE ID=?', ['free', appID], (err, res) => {
+                if (err) return result(err, null);
+
+                return result(null, { status: 'successful' });
+            })
+        });
     });
 }
 

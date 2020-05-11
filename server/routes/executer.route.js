@@ -6,4 +6,5 @@ module.exports = app => {
 
     app.post('/executer/application/list/:status/:id', Executer.readApplications);
     app.post('/executer/application/accept/:userID', Executer.create);
+    app.delete('/executer/application/reset/:userID/:appID', Executer.delete);
 }
