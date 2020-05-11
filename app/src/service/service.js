@@ -46,12 +46,12 @@ class Service {
         let path;
 
         if (userID && status !== menuTitleList[0].status) {
-            path = `/executer/application/list/${status}/${userID}`
+            path = `/executer/application/list/${status}/${userID}` //Show app list with STATUS for current USER
         }
         else {
-            path = `/application/list/${status}`;
+            path = `/application/list/${status}`; //Show ALL exist apps free
         }
-        
+
         const res = await this._baseFunc.getResource(path);
         return this._normalizeApp.app(res);
     }
