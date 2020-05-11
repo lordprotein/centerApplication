@@ -9,11 +9,11 @@ export const initLoad = {
 }
 
 export const initUser = {
-    isAuthorization: false,
+    isLogin: false,
     userInfo: {
-        name: '',
-        role: '',
-        ID: ''
+        name: 'Романов Илья Андреевич',
+        role: 'Administrator',
+        ID: '82a7f5f0-94a6-4845-be2f-246d4d1ac9bb'
     },
 }
 
