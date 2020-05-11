@@ -67,6 +67,12 @@ class Service {
         return this._baseFunc.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
     }
 
+    //Update
+
+    toCompleteApp = (appID) => {
+        return this._baseFunc.methodRequset(`/application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
+    }
+
     //Delete
 
     resetAppOfExecuter = (userID, appID) => {

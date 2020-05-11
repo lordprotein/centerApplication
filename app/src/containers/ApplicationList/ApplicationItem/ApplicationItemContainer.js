@@ -44,25 +44,33 @@ class ApplicationItemContainer extends Component {
             .then(() => removeApplication(id));
     }
 
+    handleComplete = () => {
+        const { data: { id }, removeApplication } = this.props;
+
+        service.toCompleteApp(id)
+            .then(() => removeApplication(id))
+    }
+
 
     filterHandle = () => {
         const { data: { status } } = this.props;
         const accept = this.handleAccept;
         const reset = this.handleReset;
         const remove = this.handleRemove;
+        const complete = this.handleComplete;
 
         switch (status) {
             case menuTitleList[0].status: {
                 return { accept, remove };
             }
             case menuTitleList[1].status: {
-                return { reset, remove };
+                return { reset, remove, complete };
             }
             default: return;
         }
     }
 
-    
+
     render() {
         const { data } = this.props;
         const { isSlideDown } = this.state;

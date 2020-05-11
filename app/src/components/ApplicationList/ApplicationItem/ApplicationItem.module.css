@@ -35,7 +35,7 @@
     border-right: 2px solid #f9faff;
 }
 
-.statusFree, .statusProcess, .statusComplited {
+.statusFree, .statusProcess, .statusCompleted {
     font-weight: 500;
 }
 
@@ -47,6 +47,6 @@
     color: #e2c626;
 }
 
-.statusComplited {
+.statusCompleted {
 color: #a813e2;
 }

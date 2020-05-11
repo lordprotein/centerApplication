@@ -67,6 +67,7 @@ const MoreInfo = ({ data, handleBtns }) => {
 
 
 const statusProps = (status) => {
+    
     switch (status) {
         case menuTitleList[0].status: {
             return {
@@ -81,6 +82,14 @@ const statusProps = (status) => {
                 title: 'В процессе',
                 styles: `${styles.title} ${styles.statusProcess}`,
                 btnList: (handleBtns) => btnListProcess(handleBtns)
+            }
+        }
+
+        case menuTitleList[2].status: {
+            return {
+                title: 'Завершено',
+                styles: `${styles.title} ${styles.statusCompleted}`,
+                btnList: () => { }
             }
         }
 
@@ -114,6 +123,10 @@ const btnListProcess = (handleBtns) => {
             <Button
                 title="Удалить"
                 click={handleBtns.remove}
+            />
+            <Button
+                title="Завершить"
+                click={handleBtns.complete}
             />
         </>
     );
