@@ -21,9 +21,7 @@ Executer.readApplications = (req, result) => {
     db.query('SELECT applications.* FROM applications_of_executers INNER JOIN applications WHERE applications_of_executers.ID_APPLICATION = applications.ID AND applications_of_executers.ID_EXECUTER = ? AND applications.status = ?', [id, status], (err, res) => {
         if (err) return result(err, null);
 
-        if (res.length) return result(null, res);
-
-        result({ kind: 'not_found' }, null);
+        return result(null, res);
     });
 }
 
