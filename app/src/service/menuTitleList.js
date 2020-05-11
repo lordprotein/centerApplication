@@ -8,7 +8,7 @@ export const menuTitleList = [
         status: 'process'
     },
     {
-        name: 'Выполненные',
-        status: 'complited'
+        name: 'Завершенные',
+        status: 'completed'
     },
 ];
