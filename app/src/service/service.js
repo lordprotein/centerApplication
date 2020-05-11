@@ -16,7 +16,7 @@ class BaseFuncService {
         return response.json();
     }
 
-    methodRequset = async (url, method, data) => {
+    methodRequset = async (url, method, data = {}) => {
         const req = await this.getResource(url, {
             method,
             body: JSON.stringify(data),
@@ -61,7 +61,15 @@ class Service {
 
         return this._baseFunc.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
     }
+
+    //Delete
+
+    resetAppOfExecuter = (id_executer, id_application) => {
+        return this._baseFunc.methodRequset(`/executer/application/reset/${id_executer}/${id_application}`, 'DELETE');
+
+    }
 }
+
 
 
 class NormalizeApp {

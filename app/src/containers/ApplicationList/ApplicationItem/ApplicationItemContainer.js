@@ -26,7 +26,12 @@ class ApplicationItemContainer extends Component {
     }
 
     handleReset = () => {
-        
+        const { data: { id }, removeApplication } = this.props;
+        service.resetAppOfExecuter('9ad94158-c2e3-4aa5-929c-6cdef375587d', id)
+            .then(res => {
+                removeApplication(id);
+                console.log(res);
+            })
     }
 
     render() {
