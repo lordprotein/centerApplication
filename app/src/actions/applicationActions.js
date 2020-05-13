@@ -21,3 +21,10 @@ export function updateTitleOfPage(title) {
         title
     }
 }
+
+export function updatePriority(ID, priority) {
+    return {
+        type: actionTypes.UPDATE_PRIORITY,
+        data: { ID, priority }
+    }
+}

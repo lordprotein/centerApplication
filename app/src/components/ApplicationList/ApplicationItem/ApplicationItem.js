@@ -3,17 +3,20 @@ import styles from './ApplicationItem.module.css';
 import { shortenName } from '../../../service/shortName';
 import { Button } from '../../Button/Button';
 import { menuTitleList } from '../../../service/menuTitleList';
+import { priorityNormalize } from './proirityNormalize';
+import SelectListContainer from '../../../containers/SelectList/SelectListContainer';
 
 
 export const ApplicationItem = (props) => {
     const { handleClick, isSlideDown, data } = props;
-    const { date, task, name, status } = data;
+    const { date, task, name, status, priority } = data;
 
     const statusStyles = statusProps(status).styles;
     const transformStatus = statusProps(status).title;
     const shortTask = shortenName(task);
     const shortName = shortenName(name);
-
+    const priorityWord = priorityNormalize(priority);
+    console.log(priority)
     return (
         <div className={styles.item}>
             <div className={styles.row} onClick={handleClick}>
@@ -24,6 +27,7 @@ export const ApplicationItem = (props) => {
                 <div className={styles.title}>{date}</div>
                 <div className={styles.title}>{shortName}</div>
                 <div className={styles.title}>no name</div>
+                <div className={styles.title}>{priorityWord}</div>
                 <div className={statusStyles}>{transformStatus}</div>
             </div>
             {isSlideDown && <MoreInfo {...props} />}
@@ -34,7 +38,7 @@ export const ApplicationItem = (props) => {
 
 
 const MoreInfo = ({ data, handleBtns }) => {
-    const { date, status, task, name } = data;
+    const { date, status, task, name, priority, phone } = data;
 
     return (
         <div className={styles.moreInfo}>
@@ -53,27 +57,28 @@ const MoreInfo = ({ data, handleBtns }) => {
                         <td>{name}</td>
                     </tr>
                     <tr>
-                        <td></td>
-                        <td></td>
+                        <td>Номер телефона</td>
+                        <td>{phone}</td>
                     </tr>
                 </tbody>
             </table>
             <div className={styles.btns}>
-                {statusProps(status).btnList(handleBtns)}
+                {statusProps(status, priority).btnList(handleBtns)}
             </div>
         </div>
     )
 }
 
 
-const statusProps = (status) => {
-    
+
+const statusProps = (status, priority) => {
+
     switch (status) {
         case menuTitleList[0].status: {
             return {
                 title: 'Свободно',
                 styles: `${styles.title} ${styles.statusFree}`,
-                btnList: (handleBtns) => btnListFree(handleBtns)
+                btnList: (handleBtns) => btnListFree(handleBtns, priority)
             }
         }
 
@@ -98,7 +103,8 @@ const statusProps = (status) => {
 }
 
 
-const btnListFree = (handleBtns) => {
+const btnListFree = (handleBtns, priority) => {
+
     return (
         <>
             <Button
@@ -109,6 +115,12 @@ const btnListFree = (handleBtns) => {
                 title="Удалить"
                 click={handleBtns.remove}
             />
+            <SelectListContainer
+                list={priorityNormalize()}
+                defaultValue={priorityNormalize(priority)}
+            >
+                {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
+            </SelectListContainer>
         </>
     );
 }

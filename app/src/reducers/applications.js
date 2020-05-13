@@ -36,6 +36,23 @@ const applications = (state = initApplication, action) => {
                 title
             }
         }
+
+
+        case types.UPDATE_PRIORITY: {
+            const { data: { ID, priority } } = action;
+            const { list } = state;
+
+            const newList = [...list];
+            const numAppItem = list.findIndex(item => item.id === ID);
+
+            newList[numAppItem].priority = priority;
+
+            return {
+                ...state,
+                list: newList
+            }
+        }
+
         default: return state;
     }
 }

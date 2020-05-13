@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { ApplicationItem } from '../../../components/ApplicationList/ApplicationItem/ApplicationItem';
 import { service } from '../../../service/service';
-import { removeApplication } from '../../../actions/applicationActions';
+import * as appActions from '../../../actions/applicationActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { selectorsUser } from '../../../selectors/user';
@@ -51,6 +51,13 @@ class ApplicationItemContainer extends Component {
             .then(() => removeApplication(id))
     }
 
+    handlePriority = (value) => {
+        const { data: { id }, updatePriority } = this.props;
+
+        service.setPriority(id, value)
+            .then(() => updatePriority(id, value))
+    }
+
 
     filterHandle = () => {
         const { data: { status } } = this.props;
@@ -58,12 +65,14 @@ class ApplicationItemContainer extends Component {
         const reset = this.handleReset;
         const remove = this.handleRemove;
         const complete = this.handleComplete;
+        const setPriority = this.handlePriority;
+
 
         switch (status) {
-            case menuTitleList[0].status: {
-                return { accept, remove };
+            case menuTitleList[0].status: { //free
+                return { accept, remove, setPriority };
             }
-            case menuTitleList[1].status: {
+            case menuTitleList[1].status: { //progress
                 return { reset, remove, complete };
             }
             default: return;
@@ -74,7 +83,7 @@ class ApplicationItemContainer extends Component {
     render() {
         const { data } = this.props;
         const { isSlideDown } = this.state;
-
+        // console.log(data.priority)
         return (
             <ApplicationItem
                 data={data}
@@ -95,9 +104,9 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = dispatch => {
-    return {
-        removeApplication: bindActionCreators(removeApplication, dispatch)
-    }
+    const { updatePriority, removeApplication } = bindActionCreators(appActions, dispatch)
+
+    return { removeApplication, updatePriority };
 }
 
 

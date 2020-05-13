@@ -12,6 +12,7 @@ export const ApplicationList = ({ children }) => {
                 <div className={stylesItem.title}>Дата</div>
                 <div className={stylesItem.title}>Фио</div>
                 <div className={stylesItem.title}>Исполнитель(-ли)</div>
+                <div className={stylesItem.title}>Приоритет</div>
                 <div className={stylesItem.title}>Статус</div>
             </div>
             {children}

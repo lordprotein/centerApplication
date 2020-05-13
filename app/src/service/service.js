@@ -73,6 +73,11 @@ class Service {
         return this._baseFunc.methodRequset(`/application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
     }
 
+    setPriority = (appID, priority) => {
+        return this._baseFunc.methodRequset(`/application/priority/${appID}`, 'PUT', { priority });
+
+    }
+
     //Delete
 
     resetAppOfExecuter = (userID, appID) => {
