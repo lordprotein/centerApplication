@@ -29,22 +29,21 @@ class BaseFuncService {
 }
 
 
-class Service {
-    constructor() {
-        this._baseFunc = new BaseFuncService();
-        this._normalizeApp = new NormalizeApp();
-    }
+class Service extends BaseFuncService {
+    // constructor(domen) {
+        // super(domen);
+    // }
 
     //Get
 
     getApplItem = async (id) => {
-        const res = await this._baseFunc.getResource(`/application/${id}`);
-        return this._normalizeApp.app(res);
+        const res = await this.getResource(`/application/${id}`);
+        return normalizeApp.app(res);
     }
 
     getApplList = async (status, userID) => {
-        const res = await this._baseFunc.getResource(`/executer/application/list/${status}/${userID}`);
-        return this._normalizeApp.app(res);
+        const res = await this.getResource(`/executer/application/list/${status}/${userID}`);
+        return normalizeApp.app(res);
     }
 
     //Post
@@ -58,52 +57,50 @@ class Service {
             countExecuter
         }
 
-        return this._baseFunc.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
+        return this.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
     }
 
     //Update
 
     toCompleteApp = (appID) => {
-        return this._baseFunc.methodRequset(`/application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
+        return this.methodRequset(`/application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
     }
 
     setPriority = (appID, priority) => {
-        return this._baseFunc.methodRequset(`/application/priority/${appID}`, 'PUT', { priority });
+        return this.methodRequset(`/application/priority/${appID}`, 'PUT', { priority });
 
     }
 
     //Delete
 
     resetAppOfExecuter = (userID, appID) => {
-        return this._baseFunc.methodRequset(`/executer/application/reset/${userID}/${appID}`, 'DELETE');
+        return this.methodRequset(`/executer/application/reset/${userID}/${appID}`, 'DELETE');
     }
 
     removeAppItem = (userID) => {
-        return this._baseFunc.methodRequset(`/application/${userID}`, 'DELETE');
+        return this.methodRequset(`/application/${userID}`, 'DELETE');
     }
 }
 
 
 
-class NormalizeApp {
-    app = data => {
-        return data.map(item => {
-            const { ID, case_num, date, full_name, phone_num, priority, status, task, count_executer, current_count_executers } = item;
+function normalizeApp(data) {
+    return data.map(item => {
+        const { ID, case_num, date, full_name, phone_num, priority, status, task, count_executer, current_count_executers } = item;
 
-            return {
-                id: ID,
-                caseNum: case_num,
-                date,
-                name: full_name,
-                phone: phone_num,
-                priority,
-                status,
-                task,
-                countExecuter: count_executer,
-                currCountExecuters: current_count_executers
-            };
-        })
-    }
+        return {
+            id: ID,
+            caseNum: case_num,
+            date,
+            name: full_name,
+            phone: phone_num,
+            priority,
+            status,
+            task,
+            countExecuter: count_executer,
+            currCountExecuters: current_count_executers
+        };
+    })
 }
 
 

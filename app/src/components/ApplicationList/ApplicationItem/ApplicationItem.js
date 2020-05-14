@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './ApplicationItem.module.css';
-import { shortenName } from '../../../service/shortName';
 import { Button } from '../../Button/Button';
 import { menuTitleList } from '../../../service/menuTitleList';
-import { priorityNormalize } from './proirityNormalize';
+import { priorityNormalize, generateExecuterCount } from './formattingFunctions';
 import SelectListContainer from '../../../containers/SelectList/SelectListContainer';
+import { dateNormalize, shortenName } from '../../../service/normalizeFunctions';
 
 
 export const ApplicationItem = (props) => {
@@ -23,7 +23,8 @@ export const ApplicationItem = (props) => {
         shortTask = shortenName(task),
         shortName = shortenName(name),
         priorityWord = priorityNormalize(priority),
-        executersWord = generateExecuterCount(currCountExecuters, countExecuter);
+        executersWord = generateExecuterCount(currCountExecuters, countExecuter),
+        normalizeDate = dateNormalize(date);
 
     return (
         <div className={styles.item}>
@@ -32,7 +33,7 @@ export const ApplicationItem = (props) => {
                     <input type='checkbox' />
                 </div>
                 <div className={styles.title}>{shortTask}</div>
-                <div className={styles.title}>{date}</div>
+                <div className={styles.title}>{normalizeDate}</div>
                 <div className={styles.title}>{shortName}</div>
                 <div className={styles.title}>{executersWord}</div>
                 <div className={styles.title}>{priorityWord}</div>
@@ -46,16 +47,12 @@ export const ApplicationItem = (props) => {
 
 
 const MoreInfo = ({ data, handleBtns }) => {
-    const { date, task, name, phone } = data;
+    const { task, name, phone } = data;
 
     return (
         <div className={styles.moreInfo}>
             <table>
                 <tbody>
-                    <tr>
-                        <td>Дата</td>
-                        <td>{date}</td>
-                    </tr>
                     <tr>
                         <td>Задача</td>
                         <td>{task}</td>
@@ -75,13 +72,6 @@ const MoreInfo = ({ data, handleBtns }) => {
             </div>
         </div>
     )
-}
-
-
-const generateExecuterCount = (currCount, countExecuters) => {
-    if (countExecuters === 1) return 1;
-    if (currCount === countExecuters) return countExecuters;
-    if (currCount < countExecuters) return `${currCount} из ${countExecuters}`;
 }
 
 
@@ -115,7 +105,7 @@ const statusProps = (data) => {
 
         case menuTitleList[3].status: {
             return {
-                title: `Идёт набор `,
+                title: `Идёт набор ...`,
                 styles: `${styles.title} ${styles.statusFree}`,
                 btnList: (handleBtns) => btnListPending(handleBtns, priority)
             }

@@ -86,7 +86,7 @@ class ApplicationItemContainer extends Component {
     render() {
         const { data } = this.props;
         const { isSlideDown } = this.state;
-        // console.log(data.priority)
+        
         return (
             <ApplicationItem
                 data={data}

@@ -19,3 +19,9 @@ export const priorityNormalize = (num, reverse) => {
         default: return;
     }
 }
+
+export const generateExecuterCount = (currCount, countExecuters) => {
+    if (countExecuters === 1) return 1;
+    if (currCount === countExecuters) return countExecuters;
+    if (currCount < countExecuters) return `${currCount} из ${countExecuters}`;
+}
