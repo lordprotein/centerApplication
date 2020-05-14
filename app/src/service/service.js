@@ -42,17 +42,8 @@ class Service {
         return this._normalizeApp.app(res);
     }
 
-    getApplList = async (status, userID = null) => {
-        let path;
-
-        if (userID && status !== menuTitleList[0].status) {
-            path = `/executer/application/list/${status}/${userID}` //Show app list with STATUS for current USER
-        }
-        else {
-            path = `/application/list/${status}`; //Show ALL exist apps free
-        }
-
-        const res = await this._baseFunc.getResource(path);
+    getApplList = async (status, userID) => {
+        const res = await this._baseFunc.getResource(`/executer/application/list/${status}/${userID}`);
         return this._normalizeApp.app(res);
     }
 

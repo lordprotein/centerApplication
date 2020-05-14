@@ -18,11 +18,38 @@ Executer.read = (req, result) => {
 Executer.readApplications = (req, result) => {
     const { id, status } = req.params;
 
-    db.query('SELECT applications.* FROM applications_of_executers INNER JOIN applications WHERE applications_of_executers.ID_APPLICATION = applications.ID AND applications_of_executers.ID_EXECUTER = ? AND applications.status = ?', [id, status], (err, res) => {
-        if (err) return result(err, null);
+    if (status === 'free') {
+        db.query(`SELECT applications.ID FROM applications_of_executers INNER JOIN applications WHERE applications.ID = applications_of_executers.ID_APPLICATION AND applications_of_executers.ID_EXECUTER = ? AND applications.status = 'pending'`, id, (err, res) => {
+            if (err) return result(err, null);
+            let notList = '';
 
-        return result(null, res);
-    });
+            if (res.length) {
+                res.forEach(item => {
+                    notList += ` applications.ID = '${item.ID}' AND NOT`;
+                });
+
+                const lastWord = notList.lastIndexOf(' AND NOT');
+                notList = notList.substring(0, lastWord);
+                notList = `AND (NOT ${notList})`;
+            }
+
+
+            db.query(`SELECT DISTINCT applications.* FROM applications INNER JOIN applications_of_executers WHERE applications_of_executers.ID_APPLICATION != applications.ID AND (applications.status = 'pending' ${notList}) OR applications.status = 'free'`, (err, res) => {
+                if (err) return result(err, null);
+                
+                return result(null, res);
+            });
+        })
+    }
+    else {
+        db.query('SELECT applications.* FROM applications_of_executers INNER JOIN applications WHERE applications_of_executers.ID_APPLICATION = applications.ID AND applications_of_executers.ID_EXECUTER = ? AND applications.status = ?', [id, status], (err, res) => {
+            if (err) return result(err, null);
+
+            return result(null, res);
+        });
+    }
+
+
 }
 
 
