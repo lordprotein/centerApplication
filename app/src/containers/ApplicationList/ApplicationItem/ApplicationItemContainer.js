@@ -76,7 +76,7 @@ class ApplicationItemContainer extends Component {
                 return { reset, remove, complete };
             }
             case menuTitleList[3].status: { //pending
-                return { reset, remove, accept, reset };
+                return { reset, remove, accept, setPriority };
             }
             default: return;
         }
