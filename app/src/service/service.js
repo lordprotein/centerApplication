@@ -38,12 +38,12 @@ class Service extends BaseFuncService {
 
     getApplItem = async (id) => {
         const res = await this.getResource(`/application/${id}`);
-        return normalizeApp.app(res);
+        return normalizeApp(res);
     }
 
     getApplList = async (status, userID) => {
         const res = await this.getResource(`/executer/application/list/${status}/${userID}`);
-        return normalizeApp.app(res);
+        return normalizeApp(res);
     }
 
     //Post
