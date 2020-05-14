@@ -78,7 +78,6 @@ Application.delete = (req, result) => {
     const { id } = req.params;
 
     db.query('DELETE FROM applications WHERE ID=?', id, (err, res) => {
-        console.log(id)
         if (err) return result(err, null);
 
         result(null, res);

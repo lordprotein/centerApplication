@@ -91,8 +91,6 @@ Executer.delete = (req, result) => {
 
             status = ((status === 'process' || status === 'pending') && currCountExecuters !== 0) ? 'pending' : 'free';
 
-            console.log(currCountExecuters, appID)
-
             db.query('UPDATE applications SET status=?, current_count_executers=? WHERE ID=?', [status, currCountExecuters, appID], (err, res) => {
                 if (err) return result(err, null);
 
