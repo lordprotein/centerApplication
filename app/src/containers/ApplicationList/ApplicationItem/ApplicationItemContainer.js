@@ -22,9 +22,9 @@ class ApplicationItemContainer extends Component {
 
 
     handleAccept = () => {
-        const { data: { id }, removeApplication, userID } = this.props;
+        const { data, data: { id }, removeApplication, userID } = this.props;
 
-        service.postAcceptApp(userID, id)
+        service.postAcceptApp(userID, data)
             .then(() => removeApplication(id));
     }
 
@@ -74,6 +74,9 @@ class ApplicationItemContainer extends Component {
             }
             case menuTitleList[1].status: { //progress
                 return { reset, remove, complete };
+            }
+            case menuTitleList[3].status: { //pending
+                return { reset, remove, accept, reset };
             }
             default: return;
         }

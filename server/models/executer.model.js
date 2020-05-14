@@ -28,19 +28,24 @@ Executer.readApplications = (req, result) => {
 
 Executer.create = (req, result) => {
     const { userID } = req.params;
-    const { id, id_application } = req.body;
+    const { id, id_application, countExecuter } = req.body;
+    let status = 'process';
 
     db.query('INSERT INTO applications_of_executers (ID, ID_EXECUTER, ID_APPLICATION) VALUES (?, ?, ?)', [id, userID, id_application], (err, res) => {
         if (err) return result(err, null);
 
-        db.query('UPDATE applications SET status = ? WHERE ID = ?', ['process', id_application], (err, res) => {
-            if (err) {
-                db.query('DELETE * FROM applications_of_executers WHERE ID = ?', id_application);
+        db.query('SELECT current_count_executers FROM applications WHERE ID=?', id_application, (err, res) => {
+            if (err) return result(err, null);
 
-                return result(err, null);
-            }
+            const currCountExecuters = res[0].current_count_executers + 1;
 
-            result(null, { status: 'successful' });
+            if (currCountExecuters < countExecuter) status = 'pending';
+
+            db.query('UPDATE applications SET status = ?, current_count_executers = ? WHERE ID = ?', [status, currCountExecuters, id_application], (err, res) => {
+                if (err) return result(err, null);
+
+                result(null, { status: 'successful' });
+            })
         })
     });
 }
@@ -51,12 +56,17 @@ Executer.delete = (req, result) => {
     db.query('DELETE FROM applications_of_executers WHERE ID_APPLICATION = ? AND ID_EXECUTER = ?', [appID, userID], (err, res) => {
         if (err) return result(err, null);
 
-        db.query('SELECT * FROM applications_of_executers WHERE ID_APPLICATION = ?', [appID], (err, res) => {
+        db.query('SELECT current_count_executers, status FROM applications WHERE ID = ?', [appID], (err, res) => { //To delete
             if (err) return result(err, null);
 
-            if (res.length) return result(null, { status: 'successful' });
+            const currCountExecuters = res[0].current_count_executers - 1;
+            let { status } = res[0];
 
-            db.query('UPDATE applications SET status=? WHERE ID=?', ['free', appID], (err, res) => {
+            status = ((status === 'process' || status === 'pending') && currCountExecuters !== 0) ? 'pending' : 'free';
+
+            console.log(currCountExecuters, appID)
+
+            db.query('UPDATE applications SET status=?, current_count_executers=? WHERE ID=?', [status, currCountExecuters, appID], (err, res) => {
                 if (err) return result(err, null);
 
                 return result(null, { status: 'successful' });

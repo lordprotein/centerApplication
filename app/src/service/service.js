@@ -58,10 +58,13 @@ class Service {
 
     //Post
 
-    postAcceptApp = (id_executer, id_application) => {
+    postAcceptApp = (id_executer, item) => {
+        const { id, countExecuter } = item;
+
         const data = {
             id: uniqid(),
-            id_application
+            id_application: id,
+            countExecuter
         }
 
         return this._baseFunc.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
@@ -94,7 +97,7 @@ class Service {
 class NormalizeApp {
     app = data => {
         return data.map(item => {
-            const { ID, case_num, date, full_name, phone_num, priority, status, task } = item;
+            const { ID, case_num, date, full_name, phone_num, priority, status, task, count_executer, current_count_executers } = item;
 
             return {
                 id: ID,
@@ -104,7 +107,9 @@ class NormalizeApp {
                 phone: phone_num,
                 priority,
                 status,
-                task
+                task,
+                countExecuter: count_executer,
+                currCountExecuters: current_count_executers
             };
         })
     }

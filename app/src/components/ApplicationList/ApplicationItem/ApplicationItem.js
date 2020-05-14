@@ -8,15 +8,23 @@ import SelectListContainer from '../../../containers/SelectList/SelectListContai
 
 
 export const ApplicationItem = (props) => {
-    const { handleClick, isSlideDown, data } = props;
-    const { date, task, name, status, priority } = data;
+    const { handleClick, isSlideDown, data } = props,
+        {
+            date,
+            task,
+            name,
+            priority,
+            countExecuter,
+            currCountExecuters
+        } = data,
 
-    const statusStyles = statusProps(status).styles;
-    const transformStatus = statusProps(status).title;
-    const shortTask = shortenName(task);
-    const shortName = shortenName(name);
-    const priorityWord = priorityNormalize(priority);
-    console.log(priority)
+        statusStyles = statusProps(data).styles,
+        transformStatus = statusProps(data).title,
+        shortTask = shortenName(task),
+        shortName = shortenName(name),
+        priorityWord = priorityNormalize(priority),
+        executersWord = generateExecuterCount(currCountExecuters, countExecuter);
+
     return (
         <div className={styles.item}>
             <div className={styles.row} onClick={handleClick}>
@@ -26,7 +34,7 @@ export const ApplicationItem = (props) => {
                 <div className={styles.title}>{shortTask}</div>
                 <div className={styles.title}>{date}</div>
                 <div className={styles.title}>{shortName}</div>
-                <div className={styles.title}>no name</div>
+                <div className={styles.title}>{executersWord}</div>
                 <div className={styles.title}>{priorityWord}</div>
                 <div className={statusStyles}>{transformStatus}</div>
             </div>
@@ -38,7 +46,7 @@ export const ApplicationItem = (props) => {
 
 
 const MoreInfo = ({ data, handleBtns }) => {
-    const { date, status, task, name, priority, phone } = data;
+    const { date, task, name, phone } = data;
 
     return (
         <div className={styles.moreInfo}>
@@ -63,15 +71,22 @@ const MoreInfo = ({ data, handleBtns }) => {
                 </tbody>
             </table>
             <div className={styles.btns}>
-                {statusProps(status, priority).btnList(handleBtns)}
+                {statusProps(data).btnList(handleBtns)}
             </div>
         </div>
     )
 }
 
 
+const generateExecuterCount = (currCount, countExecuters) => {
+    if (countExecuters === 1) return 1;
+    if (currCount === countExecuters) return countExecuters;
+    if (currCount < countExecuters) return `${currCount} из ${countExecuters}`;
+}
 
-const statusProps = (status, priority) => {
+
+const statusProps = (data) => {
+    const { status, priority } = data;
 
     switch (status) {
         case menuTitleList[0].status: {
@@ -98,13 +113,20 @@ const statusProps = (status, priority) => {
             }
         }
 
+        case menuTitleList[3].status: {
+            return {
+                title: `Идёт набор `,
+                styles: `${styles.title} ${styles.statusFree}`,
+                btnList: (handleBtns) => btnListPending(handleBtns, priority)
+            }
+        }
+
         default: return;
     }
 }
 
 
 const btnListFree = (handleBtns, priority) => {
-
     return (
         <>
             <Button
@@ -140,6 +162,31 @@ const btnListProcess = (handleBtns) => {
                 title="Завершить"
                 click={handleBtns.complete}
             />
+        </>
+    );
+}
+
+const btnListPending = (handleBtns, priority) => {
+    return (
+        <>
+            <Button
+                title="Принять"
+                click={handleBtns.accept}
+            />
+            <Button
+                title="Удалить"
+                click={handleBtns.remove}
+            />
+            <Button
+                title="Отказаться"
+                click={handleBtns.reset}
+            />
+            <SelectListContainer
+                list={priorityNormalize()}
+                defaultValue={priorityNormalize(priority)}
+            >
+                {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
+            </SelectListContainer>
         </>
     );
 }

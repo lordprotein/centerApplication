@@ -29,10 +29,18 @@ Application.read = (req, result) => {
 
 Application.readList = (req, result) => {
     const { status } = req.params;
+    const array = [status];
 
-    db.query('SELECT * FROM applications WHERE status=?', status, (err, res) => {
+    let select = 'SELECT * FROM applications WHERE status=?';
+    
+    if (status === 'free') {
+        array.push('pending')
+        select += ' OR status=?';
+    }
+
+    db.query(select, array, (err, res) => {
         if (err) return result(err, null);
-
+        
         if (res.length) return result(null, res);
 
         result(null, res);
