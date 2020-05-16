@@ -12,7 +12,7 @@ export const menuTitleList = [
         status: 'completed'
     },
     {
-        titleMenu: 'Набор',
+        titleMenu: 'Ожидаемые',
         status: 'pending'
     },
 ];
