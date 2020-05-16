@@ -16,12 +16,19 @@ import { selectorsUser } from '../../selectors/user';
 class ApplicationListContainer extends Component {
 
     componentDidMount = () => {
-        const { setAppList, updateStatusLoad, updateTitleOfPage, userID } = this.props;
+        const {
+            setAppList,
+            updateStatusLoad,
+            updateTitleOfPage,
+            userID,
+            statusPage,
+            titlePage
+        } = this.props;
 
-        service.getApplList('free', userID)
+        service.getApplList(statusPage, userID)
             .then(res => {
                 setAppList(res);
-                updateTitleOfPage('Свободные')
+                updateTitleOfPage(titlePage)
                 updateStatusLoad(false);
             });
     }

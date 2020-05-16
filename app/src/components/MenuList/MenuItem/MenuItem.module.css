@@ -9,6 +9,7 @@
     font-size: 20px;
     color: #88a3e9;
     text-align: start;
+    text-decoration: none;
     cursor: pointer;
     transition: background 0.2s, padding 0.2s;
     outline: none;
