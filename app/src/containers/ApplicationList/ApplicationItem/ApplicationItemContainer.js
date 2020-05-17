@@ -10,35 +10,33 @@ import { menuTitleList } from '../../../service/menuTitleList';
 
 class ApplicationItemContainer extends Component {
     state = {
-        isSlideDown: false,
-        isClicked: false,
+        isOpen: false,
+        isFirstOpen: true,
         executerList: []
     }
 
 
-
     handleClick = () => {
-        const { isSlideDown } = this.state;
+        const { isOpen } = this.state;
         this.checkFirstOpen();
         this.getExecutersList();
-        this.setState(() => { return { isSlideDown: !isSlideDown } })
+        this.setState(() => { return { isOpen: !isOpen } })
     }
 
 
-
     checkFirstOpen = () => {
-        const { isClicked } = this.state;
+        const { isFirstOpen } = this.state;
 
-        if (!isClicked) this.setState({ isClicked: true });
+        if (isFirstOpen) this.setState({ isFirstOpen: false });
     }
 
 
     getExecutersList = () => {
         const { data: { id } } = this.props;
-        const { isClicked } = this.state;
+        const { isFirstOpen } = this.state;
 
-        if (isClicked) return;
-        
+        if (!isFirstOpen) return;
+
         service.getExecuterList(id)
             .then(executerList => this.setState({ executerList }));
     }
@@ -108,7 +106,7 @@ class ApplicationItemContainer extends Component {
 
     render() {
         let { data } = this.props;
-        const { isSlideDown, executerList } = this.state;
+        const { isOpen, executerList } = this.state;
 
         if (executerList.length) data = { ...data, executerList };
 
@@ -117,7 +115,7 @@ class ApplicationItemContainer extends Component {
                 data={data}
                 handleClick={this.handleClick}
                 handleBtns={this.filterHandle()}
-                isSlideDown={isSlideDown}
+                isOpen={isOpen}
             />
         );
     }

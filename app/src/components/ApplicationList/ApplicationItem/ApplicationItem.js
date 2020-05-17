@@ -9,7 +9,7 @@ import uniqid from 'uniqid';
 
 
 export const ApplicationItem = (props) => {
-    const { handleClick, isSlideDown, data } = props,
+    const { handleClick, isOpen, data } = props,
         {
             date,
             task,
@@ -41,7 +41,7 @@ export const ApplicationItem = (props) => {
                 <div className={styles.title}>{priorityWord}</div>
                 <div className={statusStyles}>{transformStatus}</div>
             </div>
-            {isSlideDown && <MoreInfo {...props} />}
+            {isOpen && <MoreInfo {...props} />}
         </div>
     );
 }
