@@ -10,14 +10,37 @@ import { menuTitleList } from '../../../service/menuTitleList';
 
 class ApplicationItemContainer extends Component {
     state = {
-        isSlideDown: false
+        isSlideDown: false,
+        isClicked: false,
+        executerList: []
     }
 
 
+
     handleClick = () => {
-        this.setState(({ isSlideDown }) => {
-            return { isSlideDown: !isSlideDown }
-        })
+        const { isSlideDown } = this.state;
+        this.checkFirstOpen();
+        this.getExecutersList();
+        this.setState(() => { return { isSlideDown: !isSlideDown } })
+    }
+
+
+
+    checkFirstOpen = () => {
+        const { isClicked } = this.state;
+
+        if (!isClicked) this.setState({ isClicked: true });
+    }
+
+
+    getExecutersList = () => {
+        const { data: { id } } = this.props;
+        const { isClicked } = this.state;
+
+        if (isClicked) return;
+        
+        service.getExecuterList(id)
+            .then(executerList => this.setState({ executerList }));
     }
 
 
@@ -84,9 +107,11 @@ class ApplicationItemContainer extends Component {
 
 
     render() {
-        const { data } = this.props;
-        const { isSlideDown } = this.state;
-        
+        let { data } = this.props;
+        const { isSlideDown, executerList } = this.state;
+
+        if (executerList.length) data = { ...data, executerList };
+
         return (
             <ApplicationItem
                 data={data}
@@ -107,9 +132,9 @@ const mapStateToProps = state => {
 
 
 const mapDispatchToProps = dispatch => {
-    const { updatePriority, removeApplication } = bindActionCreators(appActions, dispatch)
+    const { updatePriority, removeApplication, addExecuterForApp } = bindActionCreators(appActions, dispatch)
 
-    return { removeApplication, updatePriority };
+    return { removeApplication, updatePriority, addExecuterForApp };
 }
 
 

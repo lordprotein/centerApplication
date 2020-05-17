@@ -5,6 +5,7 @@ import { menuTitleList } from '../../../service/menuTitleList';
 import { priorityNormalize, generateExecuterCount } from './formattingFunctions';
 import SelectListContainer from '../../../containers/SelectList/SelectListContainer';
 import { dateNormalize, shortenName } from '../../../service/normalizeFunctions';
+import uniqid from 'uniqid';
 
 
 export const ApplicationItem = (props) => {
@@ -15,7 +16,8 @@ export const ApplicationItem = (props) => {
             name,
             priority,
             countExecuter,
-            currCountExecuters
+            currCountExecuters,
+
         } = data,
 
         statusStyles = statusProps(data).styles,
@@ -29,9 +31,9 @@ export const ApplicationItem = (props) => {
     return (
         <div className={styles.item}>
             <div className={styles.row} onClick={handleClick}>
-                <div className={styles.title}>
+                {/* <div className={styles.title}>
                     <input type='checkbox' />
-                </div>
+                </div> */}
                 <div className={styles.title}>{shortTask}</div>
                 <div className={styles.title}>{normalizeDate}</div>
                 <div className={styles.title}>{shortName}</div>
@@ -47,7 +49,7 @@ export const ApplicationItem = (props) => {
 
 
 const MoreInfo = ({ data, handleBtns }) => {
-    const { task, name, phone } = data;
+    const { task, name, phone, executerList } = data;
 
     return (
         <div className={styles.moreInfo}>
@@ -65,6 +67,19 @@ const MoreInfo = ({ data, handleBtns }) => {
                         <td>Номер телефона</td>
                         <td>{phone}</td>
                     </tr>
+                    {executerList && (
+                        <tr>
+                            <td>Список исполнителей</td>
+                            <td>
+                                <table>
+                                    <tbody>
+                                        {executerList.map(item => <tr key={uniqid()}><td>{item}</td></tr>)}
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    )}
+
                 </tbody>
             </table>
             <div className={styles.btns}>
