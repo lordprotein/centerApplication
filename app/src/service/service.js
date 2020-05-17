@@ -31,7 +31,7 @@ class BaseFuncService {
 
 class Service extends BaseFuncService {
     // constructor(domen) {
-        // super(domen);
+    // super(domen);
     // }
 
     //Get
@@ -46,6 +46,10 @@ class Service extends BaseFuncService {
         return normalizeApp(res);
     }
 
+    getExecuterList = async (appID) => {
+        const res = await this.getResource(`/application/executers/${appID}`);
+        return res.map(item => item.full_name);
+    }
     //Post
 
     postAcceptApp = (id_executer, item) => {
