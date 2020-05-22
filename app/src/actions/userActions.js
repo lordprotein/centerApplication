@@ -14,3 +14,10 @@ export function updateStatusLogin(isStatus) {
         isStatus
     }
 }
+
+export function setExistExecuters(list) {
+    return {
+        type: actionTypes.SET_EXIST_EXECUTERS,
+        list
+    }
+}

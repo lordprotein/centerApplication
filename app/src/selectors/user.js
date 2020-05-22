@@ -22,6 +22,10 @@ class SelectorsUser {
     getAllInfo = (state) => {
         return state[this._libState].userInfo
     }
+
+    existExecuters = (state) => {
+        return state[this._libState].existUsers;
+    }
 }
 
 export const selectorsUser = new SelectorsUser();

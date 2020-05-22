@@ -25,6 +25,15 @@ const user = (state = initUser, action) => {
             }
         }
 
+        case types.SET_EXIST_EXECUTERS: {
+            const { list } = action;
+
+            return {
+                ...state,
+                existUsers: list
+            }
+        }
+
         default: return state;
     }
 }

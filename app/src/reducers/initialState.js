@@ -13,8 +13,9 @@ export const initUser = {
     userInfo: {
         name: 'Романов Илья Андреевич',
         role: 'Administrator',
-        ID: '82a7f5f0-94a6-4845-be2f-246d4d1ac9bb'
+        ID: 'dff5142b-3f8a-4b53-b188-ed17ce3399de'
     },
+    existUsers: []
 }
 
 // export const initialState = {
