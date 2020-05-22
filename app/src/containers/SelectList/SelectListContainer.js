@@ -10,13 +10,14 @@ class SelectListContainer extends Component {
     }
 
     render() {
-        const { list, defaultValue } = this.props;
+        const { list, defaultValue, multiple } = this.props;
 
         return (
             <SelectList
                 defaultValue={defaultValue}
                 list={list}
                 handleSelect={this.handleSelect}
+                multiple={multiple}
             />
         );
     }

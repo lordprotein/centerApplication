@@ -46,19 +46,19 @@ class Service extends BaseFuncService {
         return normalizeApp(res);
     }
 
-    getExecuterList = async (appID) => {
-        const res = await this.getResource(`/application/executers/${appID}`);
-        return res.map(item => item.full_name);
+    getExecuterList = (appID) => {
+        return this.getResource(`/application/executers/${appID}`);
+    }
+
+    getExistExecuters = () => {
+        return this.getResource('/executer');
     }
     //Post
 
-    postAcceptApp = (id_executer, item) => {
-        const { id, countExecuter } = item;
-
+    postAcceptApp = (id_executer, id_application) => {
         const data = {
             id: uniqid(),
-            id_application: id,
-            countExecuter
+            id_application,
         }
 
         return this.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);

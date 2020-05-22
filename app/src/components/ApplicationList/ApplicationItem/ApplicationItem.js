@@ -48,7 +48,8 @@ export const ApplicationItem = (props) => {
 
 
 
-const MoreInfo = ({ data, handleBtns }) => {
+const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
+
     const { task, name, phone, executerList } = data;
 
     return (
@@ -73,7 +74,7 @@ const MoreInfo = ({ data, handleBtns }) => {
                             <td>
                                 <table>
                                     <tbody>
-                                        {executerList.map(item => <tr key={uniqid()}><td>{item}</td></tr>)}
+                                        {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td></tr>)}
                                     </tbody>
                                 </table>
                             </td>
@@ -83,7 +84,7 @@ const MoreInfo = ({ data, handleBtns }) => {
                 </tbody>
             </table>
             <div className={styles.btns}>
-                {statusProps(data).btnList(handleBtns)}
+                {statusProps(data).btnList(handleBtns, existExecutersList)}
             </div>
         </div>
     )
@@ -98,7 +99,7 @@ const statusProps = (data) => {
             return {
                 title: 'Свободно',
                 styles: `${styles.title} ${styles.statusFree}`,
-                btnList: (handleBtns) => btnListFree(handleBtns, priority)
+                btnList: (handleBtns, existExecutersList) => btnListFree(handleBtns, data)
             }
         }
 
@@ -106,7 +107,7 @@ const statusProps = (data) => {
             return {
                 title: 'В процессе',
                 styles: `${styles.title} ${styles.statusProcess}`,
-                btnList: (handleBtns) => btnListProcess(handleBtns)
+                btnList: (handleBtns, existExecutersList) => btnListProcess(handleBtns, data, existExecutersList)
             }
         }
 
@@ -122,7 +123,7 @@ const statusProps = (data) => {
             return {
                 title: `Идёт набор ...`,
                 styles: `${styles.title} ${styles.statusFree}`,
-                btnList: (handleBtns) => btnListPending(handleBtns, priority)
+                btnList: (handleBtns, existExecutersList) => btnListPending(handleBtns, data, existExecutersList)
             }
         }
 
@@ -131,7 +132,9 @@ const statusProps = (data) => {
 }
 
 
-const btnListFree = (handleBtns, priority) => {
+const btnListFree = (handleBtns, data) => {
+    const { priority } = data;
+
     return (
         <>
             <Button
@@ -148,11 +151,15 @@ const btnListFree = (handleBtns, priority) => {
             >
                 {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
             </SelectListContainer>
+
         </>
     );
 }
 
-const btnListProcess = (handleBtns) => {
+const btnListProcess = (handleBtns, data) => {
+
+    const { executerList } = data;
+
     return (
         <>
             <Button
@@ -167,11 +174,14 @@ const btnListProcess = (handleBtns) => {
                 title="Завершить"
                 click={handleBtns.complete}
             />
+
         </>
     );
 }
 
-const btnListPending = (handleBtns, priority) => {
+const btnListPending = (handleBtns, data, existExecutersList) => {
+    const { priority, executerList } = data;
+
     return (
         <>
             <Button
@@ -191,6 +201,17 @@ const btnListPending = (handleBtns, priority) => {
                 defaultValue={priorityNormalize(priority)}
             >
                 {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
+            </SelectListContainer>
+            <SelectListContainer
+                list={existExecutersList.map(({ full_name, ID }) => {
+                    return {
+                        title: full_name,
+                        value: ID
+                    }
+                })}
+                defaultValue={'dsa'}
+            >
+                {(value) => handleBtns.addOneMoreExecuter(value)}
             </SelectListContainer>
         </>
     );

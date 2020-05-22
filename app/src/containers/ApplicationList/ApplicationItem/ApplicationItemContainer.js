@@ -12,40 +12,46 @@ class ApplicationItemContainer extends Component {
     state = {
         isOpen: false,
         isFirstOpen: true,
-        executerList: []
+        executerList: [],
+        currCountExecuters: null,
+    }
+
+    componentDidMount = () => {
+        const { data: { currCountExecuters } } = this.props;
+
+        this.setState({ currCountExecuters });
+    }
+
+    firstOpenWrap = (callback) => {
+        const { isFirstOpen } = this.state;
+
+        if (isFirstOpen) {
+            callback();
+            this.setState({ isFirstOpen: false });
+        }
     }
 
 
     handleClick = () => {
         const { isOpen } = this.state;
-        this.checkFirstOpen();
-        this.getExecutersList();
+        this.firstOpenWrap(() => this.getExecutersList());
+
         this.setState(() => { return { isOpen: !isOpen } })
-    }
-
-
-    checkFirstOpen = () => {
-        const { isFirstOpen } = this.state;
-
-        if (isFirstOpen) this.setState({ isFirstOpen: false });
     }
 
 
     getExecutersList = () => {
         const { data: { id } } = this.props;
-        const { isFirstOpen } = this.state;
-
-        if (!isFirstOpen) return;
 
         service.getExecuterList(id)
-            .then(executerList => this.setState({ executerList }));
+            .then((list) => this.setState({ executerList: list }));
     }
 
 
     handleAccept = () => {
-        const { data, data: { id }, removeApplication, userID } = this.props;
+        const { data: { id }, removeApplication, userID } = this.props;
 
-        service.postAcceptApp(userID, data)
+        service.postAcceptApp(userID, id)
             .then(() => removeApplication(id));
     }
 
@@ -80,6 +86,7 @@ class ApplicationItemContainer extends Component {
     }
 
 
+
     filterHandle = () => {
         const { data: { status } } = this.props;
         const accept = this.handleAccept;
@@ -87,6 +94,7 @@ class ApplicationItemContainer extends Component {
         const remove = this.handleRemove;
         const complete = this.handleComplete;
         const setPriority = this.handlePriority;
+        const addOneMoreExecuter = this.addOneMoreExecuter;
 
 
         switch (status) {
@@ -97,25 +105,49 @@ class ApplicationItemContainer extends Component {
                 return { reset, remove, complete };
             }
             case menuTitleList[3].status: { //pending
-                return { reset, remove, accept, setPriority };
+                return { reset, remove, accept, setPriority, addOneMoreExecuter };
             }
             default: return;
         }
     }
 
 
-    render() {
-        let { data } = this.props;
-        const { isOpen, executerList } = this.state;
+    addOneMoreExecuter = (idExecuter) => {
+        const { data: { id, countExecuter }, removeApplication } = this.props;
 
-        if (executerList.length) data = { ...data, executerList };
+        service.postAcceptApp(idExecuter, id).then(() => {
+
+            const newCount = this.state.currCountExecuters + 1;
+            this.setState(({ currCountExecuters }) => { return { currCountExecuters: currCountExecuters + 1 } })
+
+            if (countExecuter === newCount) return removeApplication(id);
+
+            this.getExecutersList();
+        });
+    }
+
+
+    filterExecuters = () => {
+        const { existExecutersList } = this.props;
+        const { executerList } = this.state;
+
+        return existExecutersList.filter(({ ID }) => !(executerList.find(item => ID === item.ID)));
+    }
+
+
+    render() {
+        const { data } = this.props;
+        const { isOpen, executerList, currCountExecuters } = this.state;
+
+        const updatedData = { ...data, executerList, currCountExecuters };
 
         return (
             <ApplicationItem
-                data={data}
+                data={updatedData}
                 handleClick={this.handleClick}
                 handleBtns={this.filterHandle()}
                 isOpen={isOpen}
+                existExecutersList={this.filterExecuters()}
             />
         );
     }
@@ -124,7 +156,8 @@ class ApplicationItemContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        userID: selectorsUser.id(state)
+        userID: selectorsUser.id(state),
+        existExecutersList: selectorsUser.existExecuters(state)
     }
 }
 
