@@ -15,6 +15,18 @@ Executer.read = (req, result) => {
 }
 
 
+Executer.readExecutersList = (req, result) => {
+
+    db.query('SELECT * FROM executers', (err, res) => {
+        if (err) return result(err, null);
+
+        if (res.length) return result(null, res);
+
+        result({ kind: 'not_found' }, null);
+    });
+}
+
+
 Executer.readApplications = (req, result) => {
     const { id, status } = req.params;
 
@@ -36,7 +48,7 @@ Executer.readApplications = (req, result) => {
 
             db.query(`SELECT DISTINCT applications.* FROM applications INNER JOIN applications_of_executers WHERE applications_of_executers.ID_APPLICATION != applications.ID AND (applications.status = 'pending' ${notList}) OR applications.status = 'free'`, (err, res) => {
                 if (err) return result(err, null);
-                
+
                 return result(null, res);
             });
         })
@@ -55,18 +67,18 @@ Executer.readApplications = (req, result) => {
 
 Executer.create = (req, result) => {
     const { userID } = req.params;
-    const { id, id_application, countExecuter } = req.body;
+    const { id, id_application } = req.body;
     let status = 'process';
 
     db.query('INSERT INTO applications_of_executers (ID, ID_EXECUTER, ID_APPLICATION) VALUES (?, ?, ?)', [id, userID, id_application], (err, res) => {
         if (err) return result(err, null);
 
-        db.query('SELECT current_count_executers FROM applications WHERE ID=?', id_application, (err, res) => {
+        db.query('SELECT current_count_executers, count_executer FROM applications WHERE ID=?', id_application, (err, res) => {
             if (err) return result(err, null);
 
             const currCountExecuters = res[0].current_count_executers + 1;
 
-            if (currCountExecuters < countExecuter) status = 'pending';
+            if (currCountExecuters < res[0].count_executer) status = 'pending';
 
             db.query('UPDATE applications SET status = ?, current_count_executers = ? WHERE ID = ?', [status, currCountExecuters, id_application], (err, res) => {
                 if (err) return result(err, null);

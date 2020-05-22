@@ -42,6 +42,27 @@ exports.read = (req, res) => {
 }
 
 
+exports.readExecutersList = (req, res) => {
+    Executer.readExecutersList(req, (err, data) => {
+        if (err) {
+            if (err.kind === 'not_found') {
+                res.status(404).send({
+                    message: `Not found Executers list`
+                });
+            }
+            else {
+                res.status(500).send({
+                    message: `Error retrieving Executers list`
+                });
+            }
+        }
+        else {
+            res.send(data);
+        }
+    });
+}
+
+
 exports.readApplications = (req, res) => {
     Executer.readApplications(req, (err, data) => {
         if (err) {
