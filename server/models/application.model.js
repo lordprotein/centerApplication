@@ -51,7 +51,7 @@ Application.readList = (req, result) => {
 Application.readExecutersList = (req, result) => {
     const { id } = req.params;
 
-    db.query('SELECT executers.full_name FROM applications INNER JOIN applications_of_executers, executers WHERE applications.ID = ? AND applications.ID = applications_of_executers.ID_APPLICATION AND applications_of_executers.ID_EXECUTER = executers.ID', id, (err, res) => {
+    db.query('SELECT executers.full_name, executers.ID FROM applications INNER JOIN applications_of_executers, executers WHERE applications.ID = ? AND applications.ID = applications_of_executers.ID_APPLICATION AND applications_of_executers.ID_EXECUTER = executers.ID', id, (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);
