@@ -68,18 +68,22 @@ const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
                         <td>Номер телефона</td>
                         <td>{phone}</td>
                     </tr>
-                    {executerList && (
-                        <tr>
-                            <td>Список исполнителей</td>
-                            <td>
-                                <table>
-                                    <tbody>
-                                        {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td><button onClick={() => handleBtns.removeExecuter(item.ID)}>Удалить</button></td></tr>)}
-                                    </tbody>
-                                </table>
-                            </td>
-                        </tr>
-                    )}
+                    {executerList.length
+                        ?
+                        (
+                            <tr>
+                                <td>Список исполнителей</td>
+                                <td>
+                                    <table>
+                                        <tbody>
+                                            {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td><button onClick={() => handleBtns.removeExecuter(item.ID)}>Удалить</button></td></tr>)}
+                                        </tbody>
+                                    </table>
+                                </td>
+                            </tr>
+                        )
+                        :
+                        false}
 
                 </tbody>
             </table>
