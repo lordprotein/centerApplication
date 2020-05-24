@@ -74,7 +74,7 @@ const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
                             <td>
                                 <table>
                                     <tbody>
-                                        {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td></tr>)}
+                                        {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td><button onClick={() => handleBtns.removeExecuter(item.ID)}>Удалить</button></td></tr>)}
                                     </tbody>
                                 </table>
                             </td>

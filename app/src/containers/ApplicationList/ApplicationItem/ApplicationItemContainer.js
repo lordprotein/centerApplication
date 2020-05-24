@@ -86,15 +86,15 @@ class ApplicationItemContainer extends Component {
     }
 
 
-
     filterHandle = () => {
-        const { data: { status } } = this.props;
-        const accept = this.handleAccept;
-        const reset = this.handleReset;
-        const remove = this.handleRemove;
-        const complete = this.handleComplete;
-        const setPriority = this.handlePriority;
-        const addOneMoreExecuter = this.addOneMoreExecuter;
+        const { data: { status } } = this.props,
+            accept = this.handleAccept,
+            reset = this.handleReset,
+            remove = this.handleRemove,
+            removeExecuter = this.handleRemoveExecuter,
+            complete = this.handleComplete,
+            setPriority = this.handlePriority,
+            addOneMoreExecuter = this.addOneMoreExecuter;
 
 
         switch (status) {
@@ -102,13 +102,26 @@ class ApplicationItemContainer extends Component {
                 return { accept, remove, setPriority };
             }
             case menuTitleList[1].status: { //progress
-                return { reset, remove, complete };
+                return { reset, remove, complete, removeExecuter };
             }
             case menuTitleList[3].status: { //pending
-                return { reset, remove, accept, setPriority, addOneMoreExecuter };
+                return { reset, remove, accept, setPriority, addOneMoreExecuter, removeExecuter };
             }
             default: return;
         }
+    }
+
+
+    handleRemoveExecuter = (userID) => {
+        const { data: { id }, removeApplication } = this.props,
+            { executerList } = this.state;
+
+        const newExecutersList = executerList.filter(executer => executer.ID != userID);
+
+        service.resetAppOfExecuter(userID, id).then(res => {
+            if (!newExecutersList.length) return removeApplication(id);
+            this.setState({ executerList: newExecutersList });
+        });
     }
 
 
