@@ -14,12 +14,13 @@ class ApplicationItemContainer extends Component {
         isFirstOpen: true,
         executerList: [],
         currCountExecuters: null,
+        countExecuter: 1
     }
 
     componentDidMount = () => {
-        const { data: { currCountExecuters } } = this.props;
+        const { data: { currCountExecuters, countExecuter } } = this.props;
 
-        this.setState({ currCountExecuters });
+        this.setState({ currCountExecuters, countExecuter });
     }
 
     firstOpenWrap = (callback) => {
@@ -94,21 +95,36 @@ class ApplicationItemContainer extends Component {
             removeExecuter = this.handleRemoveExecuter,
             complete = this.handleComplete,
             setPriority = this.handlePriority,
+            setCountExecuter = this.setCountExecuter,
             addOneMoreExecuter = this.addOneMoreExecuter;
 
 
         switch (status) {
             case menuTitleList[0].status: { //free
-                return { accept, remove, setPriority };
+                return { accept, remove, setPriority, setCountExecuter, setCountExecuter };
             }
             case menuTitleList[1].status: { //progress
-                return { reset, remove, complete, removeExecuter };
+                return { reset, remove, complete, removeExecuter, setCountExecuter };
             }
             case menuTitleList[3].status: { //pending
-                return { reset, remove, accept, setPriority, addOneMoreExecuter, removeExecuter };
+                return { reset, remove, accept, setPriority, addOneMoreExecuter, removeExecuter, setCountExecuter };
             }
             default: return;
         }
+    }
+
+
+    setCountExecuter = e => {
+        const { data: { id } } = this.props;
+        const { countExecuter } = this.state;
+
+        const { value } = e.target;
+
+        if (value < 1) return;
+
+        service.setCountExecuter(id, value).then(res => {
+            this.setState({ countExecuter: value })
+        })
     }
 
 
@@ -150,9 +166,9 @@ class ApplicationItemContainer extends Component {
 
     render() {
         const { data } = this.props;
-        const { isOpen, executerList, currCountExecuters } = this.state;
+        const { isOpen, executerList, currCountExecuters, countExecuter } = this.state;
 
-        const updatedData = { ...data, executerList, currCountExecuters };
+        const updatedData = { ...data, executerList, currCountExecuters, countExecuter };
 
         return (
             <ApplicationItem

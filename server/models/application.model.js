@@ -32,7 +32,7 @@ Application.readList = (req, result) => {
     const array = [status];
 
     let select = 'SELECT * FROM applications WHERE status=?';
-    
+
     if (status === 'free') {
         array.push('pending')
         select += ' OR status=?';
@@ -40,7 +40,7 @@ Application.readList = (req, result) => {
 
     db.query(select, array, (err, res) => {
         if (err) return result(err, null);
-        
+
         if (res.length) return result(null, res);
 
         result(null, res);
@@ -80,6 +80,20 @@ Application.updateStatus = (req, result) => {
     db.query('UPDATE applications SET status=? WHERE ID=?', varList, (err, res) => {
         if (err) return result(err, null);
 
+        result(null, res);
+    });
+}
+
+
+Application.updateCountExecuters = (req, result) => {
+    const { count } = req.body;
+    const { id } = req.params;
+
+    if (count < 1) return result(null, null);
+
+    db.query('UPDATE applications SET count_executer=? WHERE ID=?', [count, id], (err, res) => {
+        if (err) return result(err, null);
+        
         result(null, res);
     });
 }

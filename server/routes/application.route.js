@@ -10,6 +10,7 @@ module.exports = app => {
 
     app.put('/application/priority/:id', Application.updatePriority);
     app.put('/application/status/:id', Application.updateStatus);
+    app.put('/application/count/executer/:id', Application.updateCountExecuters);
 
     app.delete('/application/:id', Application.delete);
 }

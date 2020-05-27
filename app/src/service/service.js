@@ -72,7 +72,10 @@ class Service extends BaseFuncService {
 
     setPriority = (appID, priority) => {
         return this.methodRequset(`/application/priority/${appID}`, 'PUT', { priority });
+    }
 
+    setCountExecuter = (appID, count) => {
+        return this.methodRequset(`/application/count/executer/${appID}`, 'PUT', { count });
     }
 
     //Delete

@@ -155,7 +155,7 @@ const btnListFree = (handleBtns, data) => {
             >
                 {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
             </SelectListContainer>
-
+            <input type="number" onChange={handleBtns.setCountExecuter} />
         </>
     );
 }

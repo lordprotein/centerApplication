@@ -127,6 +127,27 @@ exports.updateStatus = (req, res) => {
 }
 
 
+exports.updateCountExecuters = (req, res) => {
+    if (!req.body) {
+        res.status(400).send({
+            message: 'Content can not be empty!'
+        });
+    }
+
+    Application.updateCountExecuters(req, (err, data) => {
+        if (err) {
+            res.status(500).send({
+                message:
+                    err.message || 'Some error occurred while update the count executer.'
+            });
+        }
+        else {
+            res.send(data);
+        }
+    });
+}
+
+
 exports.delete = (req, res) => {
     if (!req.body) {
         res.status(400).send({
