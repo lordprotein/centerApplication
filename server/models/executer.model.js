@@ -45,8 +45,7 @@ Executer.readApplications = (req, result) => {
                 notList = `AND (NOT ${notList})`;
             }
 
-
-            db.query(`SELECT DISTINCT applications.* FROM applications INNER JOIN applications_of_executers WHERE applications_of_executers.ID_APPLICATION != applications.ID AND (applications.status = 'pending' ${notList}) OR applications.status = 'free'`, (err, res) => {
+            db.query(`SELECT DISTINCT applications.* FROM applications LEFT JOIN applications_of_executers ON applications_of_executers.ID_APPLICATION != applications.ID WHERE (applications.status = 'pending' ${notList}) OR applications.status = 'free'`, (err, res) => {
                 if (err) return result(err, null);
 
                 return result(null, res);
