@@ -103,7 +103,7 @@ const statusProps = (data) => {
             return {
                 title: 'Свободно',
                 styles: `${styles.title} ${styles.statusFree}`,
-                btnList: (handleBtns, existExecutersList) => btnListFree(handleBtns, data)
+                btnList: (handleBtns, existExecutersList) => btnListFree(handleBtns, data, existExecutersList)
             }
         }
 
@@ -136,7 +136,7 @@ const statusProps = (data) => {
 }
 
 
-const btnListFree = (handleBtns, data) => {
+const btnListFree = (handleBtns, data, existExecutersList) => {
     const { priority } = data;
 
     return (
@@ -151,9 +151,20 @@ const btnListFree = (handleBtns, data) => {
             />
             <SelectListContainer
                 list={priorityNormalize()}
-                defaultValue={priorityNormalize(priority)}
+                title={'Выставить приоритет'}
             >
                 {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
+            </SelectListContainer>
+            <SelectListContainer
+                list={existExecutersList.map(({ full_name, ID }) => {
+                    return {
+                        title: full_name,
+                        value: ID
+                    }
+                })}
+                title={'Назначить исполнителем'}
+            >
+                {(value) => handleBtns.addOneMoreExecuter(value)}
             </SelectListContainer>
             <input type="number" onChange={handleBtns.setCountExecuter} />
         </>
@@ -217,6 +228,7 @@ const btnListPending = (handleBtns, data, existExecutersList) => {
             >
                 {(value) => handleBtns.addOneMoreExecuter(value)}
             </SelectListContainer>
+            
         </>
     );
 }

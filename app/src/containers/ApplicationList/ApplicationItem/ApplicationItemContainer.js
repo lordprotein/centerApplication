@@ -101,7 +101,7 @@ class ApplicationItemContainer extends Component {
 
         switch (status) {
             case menuTitleList[0].status: { //free
-                return { accept, remove, setPriority, setCountExecuter, setCountExecuter };
+                return { accept, remove, setPriority, setCountExecuter, addOneMoreExecuter };
             }
             case menuTitleList[1].status: { //progress
                 return { reset, remove, complete, removeExecuter, setCountExecuter };
