@@ -15,4 +15,8 @@ export const menuTitleList = [
         titleMenu: 'Ожидаемые',
         status: 'pending'
     },
+    {
+        titleMenu: 'Отчёты',
+        status: null
+    }
 ];
