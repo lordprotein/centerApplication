@@ -6,7 +6,6 @@ Report.read = (req, result) => {
     const { status } = req.params;
 
     db.query(`SELECT executers.full_name as executer_name, applications.full_name as client_name, applications.task, applications.status FROM applications_of_executers JOIN applications ON applications_of_executers.ID_APPLICATION = applications.ID JOIN executers ON applications_of_executers.ID_EXECUTER = executers.ID WHERE applications.status = ?`, status, (err, res) => {
-        console.log(err)
         if (err) return result(err, null);
 
         result(null, res);

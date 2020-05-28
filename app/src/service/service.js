@@ -53,6 +53,14 @@ class Service extends BaseFuncService {
     getExistExecuters = () => {
         return this.getResource('/executer');
     }
+
+    getReportAppWithStatus = (status, id = null) => {
+        const path = id ? `/report/status/${status}/${id}` : `/report/status/${status}`;
+
+        return this.getResource(path);
+
+    }
+
     //Post
 
     postAcceptApp = (id_executer, id_application) => {

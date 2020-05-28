@@ -3,12 +3,13 @@ import { Switch, Route } from 'react-router-dom';
 import linker from '../service/linker';
 import uniqid from 'uniqid';
 import { menuTitleList } from '../service/menuTitleList';
+import { ReportPage } from '../components/Page/ReportPage/ReportPage';
 
 
 export const withRoutes = (WrappedComponent) => {
 
     return class extends Component {
-        renderForRoute = (titlePage, statusPage) => {
+        renderForRoute = (titlePage, statusPage = '') => {
 
             return (
                 <WrappedComponent
@@ -19,19 +20,28 @@ export const withRoutes = (WrappedComponent) => {
             )
         }
 
-        generateItemRoute = (titlePage, statusPage) => {
-
+        routeConstructor = (path, renderElem) => {
             return (
                 <Route
-                    path={linker(titlePage)}
+                    path={path}
                     key={uniqid()}
-                    render={() => this.renderForRoute(titlePage, statusPage)}
+                    render={renderElem}
                 />
             )
         }
 
         getListRoutes = () => {
-            return menuTitleList.map(({ titleMenu, status }) => this.generateItemRoute(titleMenu, status));
+            return menuTitleList.map(({ titleMenu, status }) => {
+                if (!status) return;
+                
+                return this.routeConstructor(linker(titleMenu), () => this.renderForRoute(titleMenu, status))
+            });
+        }
+
+        otherRoutes = () => {
+            const reports = this.routeConstructor(linker('Отчёты'), ReportPage)
+
+            return [reports]; 
         }
 
 
@@ -39,6 +49,7 @@ export const withRoutes = (WrappedComponent) => {
             return (
                 <Switch>
                     {this.getListRoutes()}
+                    {this.otherRoutes()}
                 </Switch>
             )
         }
