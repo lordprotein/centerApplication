@@ -13,6 +13,7 @@ app.use(cors);
 
 require('./routes/application.route')(app);
 require('./routes/executer.route')(app);
+require('./routes/report.route')(app);
 
 
 app.get('/check', (req, res) => {
