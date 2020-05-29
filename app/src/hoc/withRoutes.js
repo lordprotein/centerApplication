@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
 import { menuTitleList } from '../service/menuTitleList';
 import { ReportPage } from '../components/Page/ReportPage/ReportPage';
 import { LoginPage } from '../components/Page/LoginPage/LoginPage';
-import stores, { store } from '../stores/stores';
+import { store } from '../stores/stores';
 
 
 export const withRoutes = (WrappedComponent) => {
@@ -74,8 +74,6 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         loginRoute = () => {
-            const { isLogin } = this.state;
-
             const login = this.routeConstructor('/login', LoginPage)
             return [login];
 

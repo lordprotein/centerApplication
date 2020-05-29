@@ -116,8 +116,6 @@ class ApplicationItemContainer extends Component {
 
     setCountExecuter = e => {
         const { data: { id } } = this.props;
-        const { countExecuter } = this.state;
-
         const { value } = e.target;
 
         if (value < 1) return;
@@ -132,7 +130,7 @@ class ApplicationItemContainer extends Component {
         const { data: { id }, removeApplication } = this.props,
             { executerList } = this.state;
 
-        const newExecutersList = executerList.filter(executer => executer.ID != userID);
+        const newExecutersList = executerList.filter(executer => executer.ID !== userID);
 
         service.resetAppOfExecuter(userID, id).then(res => {
             if (!newExecutersList.length) return removeApplication(id);

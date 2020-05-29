@@ -40,7 +40,7 @@ class ReportListContainer extends Component {
 
 
     render() {
-        const { reportList, titleReport } = this.state;
+        const { reportList } = this.state;
         const G = this.state.currentReport;
 
         return (

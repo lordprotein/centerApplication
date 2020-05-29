@@ -96,7 +96,7 @@ const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
 
 
 const statusProps = (data) => {
-    const { status, priority } = data;
+    const { status } = data;
 
     switch (status) {
         case menuTitleList[0].status: {
@@ -137,8 +137,6 @@ const statusProps = (data) => {
 
 
 const btnListFree = (handleBtns, data, existExecutersList) => {
-    const { priority } = data;
-
     return (
         <>
             <Button
@@ -173,8 +171,6 @@ const btnListFree = (handleBtns, data, existExecutersList) => {
 
 const btnListProcess = (handleBtns, data) => {
 
-    const { executerList } = data;
-
     return (
         <>
             <Button
@@ -195,7 +191,7 @@ const btnListProcess = (handleBtns, data) => {
 }
 
 const btnListPending = (handleBtns, data, existExecutersList) => {
-    const { priority, executerList } = data;
+    const { priority } = data;
 
     return (
         <>

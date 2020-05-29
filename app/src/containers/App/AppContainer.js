@@ -13,7 +13,6 @@ import { selectorsUser } from '../../selectors/user';
 
 class AppContainer extends Component {
     componentDidMount = () => {
-        console.log('create')
         const { setExistExecuters, login } = this.props;
 
         service.getExistExecuters().then(list => {
