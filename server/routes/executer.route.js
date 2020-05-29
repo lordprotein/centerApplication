@@ -3,7 +3,7 @@ const Login = require('../controllers/login.controller');
 
 
 module.exports = app => {
-    app.get('/executer', Login.isLogin, Executer.readExecutersList);
+    app.get('/executer', Executer.readExecutersList);
     app.get('/executer/:id', Login.isLogin, Executer.read);
 
     app.get('/executer/application/list/:status/:id', Login.isLogin, Executer.readApplications);

@@ -10,9 +10,11 @@ exports.create = (req, res) => {
 
     Login.create(req, (err, data) => {
         if (err) {
+            if (err.status === false) return res.send(err);
+            
             res.status(500).send({
                 message:
-                    err.message || 'Some error occurred while authorization the Executer'
+                    err.message || false
             });
         }
         else {
