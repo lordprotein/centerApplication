@@ -14,9 +14,11 @@ export const withRoutes = (WrappedComponent) => {
         constructor(props) {
             super(props);
             this.state = { isLogin: false }
+            this._isMounted = false;
         }
 
         componentDidMount = () => {
+            this._isMounted = true;
             this.subscriber();
         }
 
@@ -26,6 +28,7 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         componentWillUnmount = () => {
+            this._isMounted = false;
             const unsubscribe = this.subscriber;
             unsubscribe();
         }
@@ -35,7 +38,7 @@ export const withRoutes = (WrappedComponent) => {
             const { isLogin } = this.state;
 
             if (isReduxLogin === isLogin) return;
-            this.setState({ isLogin: isReduxLogin });
+            if(this._isMounted) this.setState({ isLogin: isReduxLogin });
         }
 
 
