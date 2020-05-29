@@ -11,9 +11,9 @@ export const initLoad = {
 export const initUser = {
     isLogin: false,
     userInfo: {
-        name: 'Романов Илья Андреевич',
-        role: 'Administrator',
-        ID: 'dff5142b-3f8a-4b53-b188-ed17ce3399de'
+        name: '',
+        role: '',
+        ID: ''
     },
     existUsers: []
 }

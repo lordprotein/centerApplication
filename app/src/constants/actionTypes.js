@@ -9,3 +9,5 @@ export const UPDATE_STATUS_LOAD = 'UPDATE_STATUS_LOAD';
 
 export const SET_USER_INFO = 'SET_USER_INFO';
 export const UPDATE_STATUS_LOGIN = 'UPDATE_STATUS_LOGIN';
+export const LOGIN = 'LOGIN';
+export const LOGOUT = 'LOGOUT';

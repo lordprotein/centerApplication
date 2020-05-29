@@ -21,3 +21,16 @@ export function setExistExecuters(list) {
         list
     }
 }
+
+export function login(data) {
+    return {
+        type: actionTypes.LOGIN,
+        data
+    }
+}
+
+export function logout() {
+    return {
+        type: actionTypes.LOGOUT
+    }
+}

@@ -3,6 +3,28 @@ import * as types from '../constants/actionTypes';
 
 const user = (state = initUser, action) => {
     switch (action.type) {
+        case types.LOGIN: {
+            const { data: { name, role, ID } } = action;
+            console.warn({
+                ...state,
+                isLogin: true,
+                userInfo: { name, role, ID }
+            })
+            return {
+                ...state,
+                isLogin: true,
+                userInfo: { name, role, ID }
+            }
+        }
+
+        case types.LOGOUT: {
+            return {
+                ...state,
+                isLogin: false,
+                userInfo: { name: '', role: '', ID: '' }
+            }
+        }
+
         case types.SET_USER_INFO: {
             const { data: { name, role, ID } } = action;
 
