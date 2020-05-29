@@ -5,11 +5,6 @@ const user = (state = initUser, action) => {
     switch (action.type) {
         case types.LOGIN: {
             const { data: { name, role, ID } } = action;
-            console.warn({
-                ...state,
-                isLogin: true,
-                userInfo: { name, role, ID }
-            })
             return {
                 ...state,
                 isLogin: true,

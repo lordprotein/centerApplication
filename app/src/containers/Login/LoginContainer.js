@@ -15,11 +15,6 @@ class LoginContainer extends Component {
         password: 'maro'
     }
 
-    componentDidMount = () => {
-        // let history = useHistory();
-
-    }
-
     handleLogin = e => {
         const { value } = e.target;
         this.setState({ login: value });
@@ -36,7 +31,6 @@ class LoginContainer extends Component {
 
         doLogin(data);
 
-
         myCookieUser.set({...data});
         myCookieIsLogin.set(true);
 
@@ -49,7 +43,6 @@ class LoginContainer extends Component {
         service.login(login, password)
             .then(data => {
                 if (data.status === false) return;
-                console.warn(data)
                 this.successfulAuth(data, history);
             });
     }
