@@ -128,13 +128,13 @@ class ApplicationItemContainer extends Component {
 
     handleRemoveExecuter = (userID) => {
         const { data: { id }, removeApplication } = this.props,
-            { executerList } = this.state;
+            { executerList, currCountExecuters } = this.state;
 
         const newExecutersList = executerList.filter(executer => executer.ID !== userID);
 
-        service.resetAppOfExecuter(userID, id).then(res => {
+        service.resetAppOfExecuter(userID, id).then(() => {
             if (!newExecutersList.length) return removeApplication(id);
-            this.setState({ executerList: newExecutersList });
+            this.setState({ executerList: newExecutersList, currCountExecuters: currCountExecuters - 1 });
         });
     }
 
