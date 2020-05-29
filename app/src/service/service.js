@@ -92,6 +92,8 @@ class Service extends BaseFuncService {
 
 
 function normalizeApp(data) {
+    if (data.session === false) return [];
+
     return data.map(item => {
         const { ID, case_num, date, full_name, phone_num, priority, status, task, count_executer, current_count_executers } = item;
 
