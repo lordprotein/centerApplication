@@ -25,7 +25,7 @@ Login.create = (req, result) => {
 
 
 Login.isLogin = (req, next, result) => {
-    if (!req.session.length) return result({ session: 'session is closed' }, null);
+    if (!req.session.length) return result({ session: false }, null);
 
     const { ID } = req.session.auth;
     
