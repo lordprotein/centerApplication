@@ -58,7 +58,10 @@ class Service extends BaseFuncService {
         const path = id ? `/report/status/${status}/${id}` : `/report/status/${status}`;
 
         return this.getResource(path);
+    }
 
+    logout = () => {
+        return this.getResource(`/logout`);
     }
 
     //Post
@@ -72,6 +75,9 @@ class Service extends BaseFuncService {
         return this.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
     }
 
+    login = (login, password) => {
+        return this.methodRequset(`/login`, 'POST', { login, password });
+    }
     //Update
 
     toCompleteApp = (appID) => {
