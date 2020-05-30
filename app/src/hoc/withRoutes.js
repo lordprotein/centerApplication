@@ -38,7 +38,7 @@ export const withRoutes = (WrappedComponent) => {
             const { isLogin } = this.state;
 
             if (isReduxLogin === isLogin) return;
-            if(this._isMounted) this.setState({ isLogin: isReduxLogin });
+            if (this._isMounted) this.setState({ isLogin: isReduxLogin });
         }
 
 
@@ -63,9 +63,9 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         getListRoutes = () => {
-            return menuTitleList.map(({ titleMenu, status }) => {
-                if (!status) return;
+            const newList = menuTitleList.filter(item => item.status);
 
+            return newList.map(({ titleMenu, status }) => {
                 return this.routeConstructor(linker(titleMenu), () => this.renderForRoute(titleMenu, status))
             });
         }
@@ -79,7 +79,6 @@ export const withRoutes = (WrappedComponent) => {
         loginRoute = () => {
             const login = this.routeConstructor('/login', LoginPage)
             return [login];
-
         }
 
 
@@ -89,9 +88,10 @@ export const withRoutes = (WrappedComponent) => {
             return (
                 <Switch>
                     <Redirect exact from='/' to='/login' />
-                    {this.loginRoute()}
+                    {isLogin && <Redirect exact from='/login' to={linker('свободные')} />}
                     {isLogin && this.getListRoutes()}
                     {isLogin && this.otherRoutes()}
+                    {this.loginRoute()}
                 </Switch>
             )
         }
