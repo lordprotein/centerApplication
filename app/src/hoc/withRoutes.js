@@ -77,7 +77,7 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         loginRoute = () => {
-            const login = this.routeConstructor('/login', LoginPage)
+            const login = this.routeConstructor('/login', LoginPage);
             return [login];
         }
 
@@ -88,7 +88,7 @@ export const withRoutes = (WrappedComponent) => {
             return (
                 <Switch>
                     <Redirect exact from='/' to='/login' />
-                    {isLogin && <Redirect exact from='/login' to={linker('свободные')} />}
+                    {isLogin && <Redirect from='/login' to={linker('свободные')} />}
                     {isLogin && this.getListRoutes()}
                     {isLogin && this.otherRoutes()}
                     {this.loginRoute()}
