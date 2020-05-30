@@ -6,9 +6,9 @@ import BtnExitContainer from '../../../containers/BtnExit/BtnExitContainer';
 export const UserInfo = ({ role, name }) => {
     return (
         <div className={styles.userInfo}>
-            <div className={styles.icon}></div>
+            <div className={styles.icon} />
             <h3 className={styles.title}>{name}</h3>
-            <h4 className={styles.title, styles.role}>{normalizeRole(role)}</h4>
+            <h4 className={styles.title + ' ' + styles.role}>{normalizeRole(role)}</h4>
             <BtnExitContainer />
         </div>
     );

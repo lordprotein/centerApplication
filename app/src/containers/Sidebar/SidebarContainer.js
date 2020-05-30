@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Sidebar } from '../../components/Sidebar/Sidebar';
 import MenuListContainer from '../MenuList/MenuListContainer';
-import BtnExitContainer from '../BtnExit/BtnExitContainer';
+import UserInfoContainer from './UserInfo/UserInfoContainer';
 
 
 class SidebarContainer extends Component {
@@ -9,8 +9,8 @@ class SidebarContainer extends Component {
     render() {
         return (
             <Sidebar>
+                <UserInfoContainer />
                 <MenuListContainer />
-                <BtnExitContainer />
             </Sidebar>
         );
     }
