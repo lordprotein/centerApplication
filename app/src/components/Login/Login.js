@@ -1,15 +1,23 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
+import styles from './Login.module.css';
 
 
 export const Login = ({ handleLogin, handlePassword, handleSend }) => {
     let history = useHistory();
 
     return (
-        <div>
-            <input type='text' placeholder='Введите логин' onChange={handleLogin} /> <br />
-            <input type='password' placeholder='Введите пароль' onChange={handlePassword} />
-            <button type='button' onClick={() => handleSend(history)}>Войти</button>
+        <div className={styles.login}>
+            <div className={styles.field}>
+                <h2>Логин</h2>
+                <input type='text' placeholder='Введите логин' onChange={handleLogin} />
+            </div>
+            <div className={styles.field}>
+                <h2>Пароль</h2>
+                <input type='password' placeholder='Введите пароль' onChange={handlePassword} />
+            </div>
+
+            <button type='button' onClick={() => handleSend(history)} className={styles.btn}>Войти</button>
         </div>
     );
 }
