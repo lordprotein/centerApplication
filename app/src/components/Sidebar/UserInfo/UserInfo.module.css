@@ -2,13 +2,14 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 0 20px;
     color: #fafcff;
 }
 
 .icon {
     width: 120px;
     height: 120px;
-    margin-bottom: 30px;
+    margin-bottom: 10px;
     background: white url('./user.png') center center/96% no-repeat;
     border-radius: 50%;
     text-align: center;
@@ -18,7 +19,6 @@
 
 .title {
     margin-bottom: 8px;
-    padding: 0 20px;
     text-align: center;
     font-size: 22px;
     line-height: 152%;
@@ -26,7 +26,6 @@
 }
 
 .role {
-    margin-bottom: 20px;
     color: #e4edfa;
     font-size: 13px;
     letter-spacing: 0.08rem;
