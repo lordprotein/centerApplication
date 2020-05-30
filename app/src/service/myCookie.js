@@ -10,7 +10,6 @@ class MyCookie {
         ));
 
         if (!matches) return;
-
         let result = decodeURIComponent(matches[1]);
         if (this.isObj && result !== undefined) result = JSON.parse(result);
 
@@ -53,4 +52,4 @@ class MyCookie {
 
 export const myCookie = new MyCookie();
 export const myCookieUser = new MyCookie('user', true);
-export const myCookieIsLogin = new MyCookie('user');
+export const myCookieIsLogin = new MyCookie('login');
