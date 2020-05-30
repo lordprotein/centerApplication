@@ -10,6 +10,9 @@ class BtnExitContainer extends Component {
     handleExit = (history) => {
         const { logout } = this.props;
 
+        const check = window.confirm('Подтвердите выход');
+        if (!check) return;
+        
         service.logout().then(res => {
             
             myCookieUser.remove();
