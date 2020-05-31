@@ -9,9 +9,9 @@
     box-shadow: 0px 5px 10px #f7f7f7;
 }
 
-.input {
+/* .input {
 
-}
+} */
 
 .field {
     margin: 10px 0;
@@ -36,12 +36,25 @@
 }
 
 .btn {
-    width: 50%;
-    padding: 5px;
+    width: 100%;
+    margin-top: 20px;
+    padding: 8px;
     background: #1f295a;
     color: #fff;
     border: none;
     border-radius: 2px;
     outline: none;
     cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    transition: transform 0.1s;
+}
+
+.err {
+    margin: 14px 0;
+    color: red;
+    font-size: 15px;
 }
