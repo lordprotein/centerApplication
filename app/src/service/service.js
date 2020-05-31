@@ -11,7 +11,7 @@ class BaseFuncService {
         const response = await fetch(`${this.domen}/${url}`, objReq);
 
         if (!response.ok) {
-            throw new Error('Data not received');
+            throw response.status;
         }
 
         return response.json();
