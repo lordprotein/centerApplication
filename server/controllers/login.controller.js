@@ -10,7 +10,7 @@ exports.create = (req, res) => {
 
     Login.create(req, (err, data) => {
         if (err) {
-            if (err.status === false) return res.send(err);
+            if (err.status === 'user_not_found') return res.status(403).send({message: err.message})
             
             res.status(500).send({
                 message:

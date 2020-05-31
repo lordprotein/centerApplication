@@ -7,8 +7,8 @@ Login.create = (req, result) => {
 
     db.query(`SELECT executers.ID, executers.full_name as name, roles.role FROM executers JOIN roles ON executers.ID_ROLE = roles.ID  WHERE login = ? AND password = MD5(?)`, [login, password], (err, res) => {
         if (err) return result(err, null);
-
-        if (!res.length) return result({ status: false }, null);
+        
+        if (!res.length) return result({ status: 'user_not_found' }, null);
 
         const userData = res[0];
 
