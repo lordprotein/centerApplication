@@ -12,7 +12,8 @@ import { myCookieUser, myCookieIsLogin } from '../../service/myCookie';
 class LoginContainer extends Component {
     state = {
         login: 'christmas3',
-        password: 'maro'
+        password: 'maro',
+        errorText: ''
     }
 
     handleLogin = e => {
@@ -31,7 +32,7 @@ class LoginContainer extends Component {
 
         doLogin(data);
 
-        myCookieUser.set({...data});
+        myCookieUser.set({ ...data });
         myCookieIsLogin.set(true);
 
         history.push(linker('Свободные'))
@@ -41,19 +42,27 @@ class LoginContainer extends Component {
         const { login, password } = this.state;
 
         service.login(login, password)
-            .then(data => {
-                if (data.status === false) return;
-                this.successfulAuth(data, history);
-            });
+            .then(
+                data => {
+                    if (data.status === false) return;
+                    this.successfulAuth(data, history);
+                },
+                err => {
+                    if (err === 403) this.setState({ errorText: 'Неправильный логин или пароль' });
+                    
+                }
+            );
     }
 
     render() {
+        const { errorText } = this.state;
 
         return (
             <Login
                 handleLogin={this.handleLogin}
                 handlePassword={this.handlePassword}
                 handleSend={this.handleSend}
+                errorText={errorText}
             />
         );
     }
