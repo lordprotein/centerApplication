@@ -3,9 +3,10 @@ import styles from './ApplicationItem.module.css';
 import { Button } from '../../Button/Button';
 import { menuTitleList } from '../../../service/menuTitleList';
 import { priorityNormalize, generateExecuterCount } from './formattingFunctions';
-import SelectListContainer from '../../../containers/SelectList/SelectListContainer';
 import { dateNormalize, shortenName } from '../../../service/normalizeFunctions';
 import uniqid from 'uniqid';
+import { BtnsForFree } from './BtnsForFree/BtnsForFree';
+import { BtnsForPending } from './BtnsForPending/BtnsForPending';
 
 
 export const ApplicationItem = (props) => {
@@ -48,8 +49,8 @@ export const ApplicationItem = (props) => {
 
 
 
-const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
-
+const MoreInfo = (props) => {
+    const { data, handleBtns, existExecutersList } = props;
     const { task, name, phone, executerList } = data;
 
     return (
@@ -96,9 +97,9 @@ const MoreInfo = ({ data, handleBtns, existExecutersList }) => {
 
 
 const statusProps = (data) => {
-    const { status } = data;
+    const { currStatus } = data;
 
-    switch (status) {
+    switch (currStatus) {
         case menuTitleList[0].status: {
             return {
                 title: 'Свободно',
@@ -138,39 +139,25 @@ const statusProps = (data) => {
 
 const btnListFree = (handleBtns, data, existExecutersList) => {
     return (
-        <>
-            <Button
-                title="Принять"
-                click={handleBtns.accept}
-            />
-            <Button
-                title="Удалить"
-                click={handleBtns.remove}
-            />
-            <SelectListContainer
-                list={priorityNormalize()}
-                title={'Выставить приоритет'}
-            >
-                {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
-            </SelectListContainer>
-            <SelectListContainer
-                list={existExecutersList.map(({ full_name, ID }) => {
-                    return {
-                        title: full_name,
-                        value: ID
-                    }
-                })}
-                title={'Назначить исполнителем'}
-            >
-                {(value) => handleBtns.addOneMoreExecuter(value)}
-            </SelectListContainer>
-            <input type="number" onChange={handleBtns.setCountExecuter} />
-        </>
+        <BtnsForFree
+            data={data}
+            handleBtns={handleBtns}
+            existExecutersList={existExecutersList}
+        />
+    )
+}
+
+const btnListPending = (handleBtns, data, existExecutersList) => {
+    return (
+        <BtnsForPending
+            data={data}
+            handleBtns={handleBtns}
+            existExecutersList={existExecutersList}
+        />
     );
 }
 
 const btnListProcess = (handleBtns, data) => {
-
     return (
         <>
             <Button
@@ -185,46 +172,7 @@ const btnListProcess = (handleBtns, data) => {
                 title="Завершить"
                 click={handleBtns.complete}
             />
-
         </>
     );
 }
 
-const btnListPending = (handleBtns, data, existExecutersList) => {
-    const { priority } = data;
-
-    return (
-        <>
-            <Button
-                title="Принять"
-                click={handleBtns.accept}
-            />
-            <Button
-                title="Удалить"
-                click={handleBtns.remove}
-            />
-            <Button
-                title="Отказаться"
-                click={handleBtns.reset}
-            />
-            <SelectListContainer
-                list={priorityNormalize()}
-                defaultValue={priorityNormalize(priority)}
-            >
-                {(value) => handleBtns.setPriority(priorityNormalize(value, true))}
-            </SelectListContainer>
-            <SelectListContainer
-                list={existExecutersList.map(({ full_name, ID }) => {
-                    return {
-                        title: full_name,
-                        value: ID
-                    }
-                })}
-                defaultValue={'dsa'}
-            >
-                {(value) => handleBtns.addOneMoreExecuter(value)}
-            </SelectListContainer>
-            
-        </>
-    );
-}

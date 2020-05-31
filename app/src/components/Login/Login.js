@@ -16,7 +16,9 @@ export const Login = ({ handleLogin, handlePassword, handleSend, errorText }) =>
                 <h2>Пароль</h2>
                 <input type='password' placeholder='Введите пароль' onChange={handlePassword} />
             </div>
+
             {errorText && <div className={styles.err}>{errorText}</div>}
+
             <button type='button' onClick={() => handleSend(history)} className={styles.btn}>Войти</button>
         </div>
     );

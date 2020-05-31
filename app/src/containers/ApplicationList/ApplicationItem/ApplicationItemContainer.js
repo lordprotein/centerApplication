@@ -14,7 +14,8 @@ class ApplicationItemContainer extends Component {
         isFirstOpen: true,
         executerList: [],
         currCountExecuters: null,
-        countExecuter: 1
+        countExecuter: 1,
+        currStatus: this.props.data.status
     }
 
     componentDidMount = () => {
@@ -88,7 +89,7 @@ class ApplicationItemContainer extends Component {
 
 
     filterHandle = () => {
-        const { data: { status } } = this.props,
+        const { currStatus } = this.state,
             accept = this.handleAccept,
             reset = this.handleReset,
             remove = this.handleRemove,
@@ -99,12 +100,12 @@ class ApplicationItemContainer extends Component {
             addOneMoreExecuter = this.addOneMoreExecuter;
 
 
-        switch (status) {
+        switch (currStatus) {
             case menuTitleList[0].status: { //free
                 return { accept, remove, setPriority, setCountExecuter, addOneMoreExecuter };
             }
             case menuTitleList[1].status: { //progress
-                return { reset, remove, complete, removeExecuter, setCountExecuter };
+                return { reset, remove, complete, removeExecuter };
             }
             case menuTitleList[3].status: { //pending
                 return { reset, remove, accept, setPriority, addOneMoreExecuter, removeExecuter, setCountExecuter };
@@ -118,36 +119,47 @@ class ApplicationItemContainer extends Component {
         const { data: { id } } = this.props;
         const { value } = e.target;
 
-        if (value < 1) return;
-
-        service.setCountExecuter(id, value).then(res => {
-            this.setState({ countExecuter: value })
-        })
+        service.setCountExecuter(id, value).then(({ newStatus }) => {
+            this.setState({
+                countExecuter: value,
+                currStatus: newStatus
+            })
+        }, err => console.log(err))
     }
 
 
     handleRemoveExecuter = (userID) => {
         const { data: { id }, removeApplication } = this.props,
-            { executerList, currCountExecuters } = this.state;
+            { executerList, currCountExecuters, currStatus } = this.state;
 
         const newExecutersList = executerList.filter(executer => executer.ID !== userID);
-
+        
         service.resetAppOfExecuter(userID, id).then(() => {
-            if (!newExecutersList.length) return removeApplication(id);
-            this.setState({ executerList: newExecutersList, currCountExecuters: currCountExecuters - 1 });
+            if (!newExecutersList.length && currStatus !== 'free' && currStatus !== 'pending') return removeApplication(id);
+
+            this.setState({
+                executerList: newExecutersList,
+                currCountExecuters: currCountExecuters - 1
+            });
         });
     }
 
 
     addOneMoreExecuter = (idExecuter) => {
-        const { data: { id, countExecuter }, removeApplication } = this.props;
+        const { data: { id }, removeApplication } = this.props;
 
         service.postAcceptApp(idExecuter, id).then(() => {
 
             const newCount = this.state.currCountExecuters + 1;
-            this.setState(({ currCountExecuters }) => { return { currCountExecuters: currCountExecuters + 1 } })
 
-            if (countExecuter === newCount) return removeApplication(id);
+            this.setState(({ currCountExecuters }) => {
+                return {
+                    currCountExecuters: currCountExecuters + 1,
+                    currStatus: 'pending'
+                }
+            })
+
+            if (this.state.countExecuter === newCount) return removeApplication(id);
 
             this.getExecutersList();
         });
@@ -164,10 +176,9 @@ class ApplicationItemContainer extends Component {
 
     render() {
         const { data } = this.props;
-        const { isOpen, executerList, currCountExecuters, countExecuter } = this.state;
-
-        const updatedData = { ...data, executerList, currCountExecuters, countExecuter };
-
+        const { isOpen, executerList, currCountExecuters, countExecuter, currStatus } = this.state;
+        const updatedData = { ...data, executerList, currCountExecuters, countExecuter, currStatus };
+        
         return (
             <ApplicationItem
                 data={updatedData}

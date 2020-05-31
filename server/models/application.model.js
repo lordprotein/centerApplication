@@ -91,11 +91,26 @@ Application.updateCountExecuters = (req, result) => {
 
     if (count < 1) return result(null, null);
 
-    db.query('UPDATE applications SET count_executer=? WHERE ID=?', [count, id], (err, res) => {
+    db.query('SELECT current_count_executers FROM applications WHERE ID=? ', id, (err, res) => {
         if (err) return result(err, null);
-        
-        result(null, res);
+
+        const currCountExecuters = res[0].current_count_executers;
+
+        let newStatus = 'free';
+        if (count < 1 || count <= currCountExecuters) return result(err, null);
+
+        if (count > 1) newStatus = 'pending';
+
+        db.query('UPDATE applications SET count_executer=?, status=? WHERE ID=?', [count, newStatus, id], (err, res) => {
+            if (err) return result(err, null);
+
+            return result(null, { newStatus });
+        });
+
+        // result(null, res);
     });
+
+
 }
 
 
