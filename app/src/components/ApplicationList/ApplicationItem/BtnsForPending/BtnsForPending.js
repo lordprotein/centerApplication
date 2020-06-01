@@ -1,16 +1,14 @@
 import React from 'react';
-import { withAdmin } from '../../../../hoc/withRole';
-import { Button } from '../../../Button/Button';
+import { Button, ButtonWithAdmin, ButtonWithExecuter } from '../../../Button/Button';
 import { SelectListExecutersWithAdmin, SelectListPriorityWithAdmin } from '../../../../containers/SelectList/SelectListContainer';
 import { CountExecutersWithAdmin } from '../CountExecuters/CountExecuters';
 
 
 export const BtnsForPending = ({ handleBtns, data, existExecutersList }) => {
-    const ButtonWithAdmin = withAdmin(Button);
 
     return (
         <>
-            <Button
+            <ButtonWithExecuter
                 title="Принять"
                 click={handleBtns.accept}
             />
@@ -20,7 +18,7 @@ export const BtnsForPending = ({ handleBtns, data, existExecutersList }) => {
                 click={handleBtns.remove}
             />
 
-            <Button
+            <ButtonWithExecuter
                 title="Отказаться"
                 click={handleBtns.reset}
             />

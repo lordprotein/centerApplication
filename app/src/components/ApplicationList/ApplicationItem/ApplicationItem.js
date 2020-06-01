@@ -1,12 +1,13 @@
 import React from 'react';
 import styles from './ApplicationItem.module.css';
-import { Button } from '../../Button/Button';
 import { menuTitleList } from '../../../service/menuTitleList';
 import { priorityNormalize, generateExecuterCount } from './formattingFunctions';
 import { dateNormalize, shortenName } from '../../../service/normalizeFunctions';
 import uniqid from 'uniqid';
 import { BtnsForFree } from './BtnsForFree/BtnsForFree';
 import { BtnsForPending } from './BtnsForPending/BtnsForPending';
+import { BtnsForProcess } from './BtnsForProcess/BtnsForProcess';
+import { BtnRemoveExecuter } from './BtnRemoveExecuter/BtnRemoveExecuter';
 
 
 export const ApplicationItem = (props) => {
@@ -51,7 +52,7 @@ export const ApplicationItem = (props) => {
 
 const MoreInfo = (props) => {
     const { data, handleBtns, existExecutersList } = props;
-    const { task, name, phone, executerList } = data;
+    const { task, name, phone, executerList, status } = data;
 
     return (
         <div className={styles.moreInfo}>
@@ -77,7 +78,7 @@ const MoreInfo = (props) => {
                                 <td>
                                     <table>
                                         <tbody>
-                                            {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td><button onClick={() => handleBtns.removeExecuter(item.ID)}>Удалить</button></td></tr>)}
+                                            {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td>{status !== 'completed' ? <BtnRemoveExecuter handleBtns={handleBtns} ID={item.ID} /> : false}</td></tr>)}
                                         </tbody>
                                     </table>
                                 </td>
@@ -159,20 +160,9 @@ const btnListPending = (handleBtns, data, existExecutersList) => {
 
 const btnListProcess = (handleBtns, data) => {
     return (
-        <>
-            <Button
-                title="Отказаться"
-                click={handleBtns.reset}
-            />
-            <Button
-                title="Удалить"
-                click={handleBtns.remove}
-            />
-            <Button
-                title="Завершить"
-                click={handleBtns.complete}
-            />
-        </>
+        <BtnsForProcess
+            handleBtns={handleBtns}
+        />
     );
 }
 

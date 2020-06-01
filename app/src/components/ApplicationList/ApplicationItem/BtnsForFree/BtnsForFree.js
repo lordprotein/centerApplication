@@ -1,16 +1,14 @@
 import React from 'react';
-import { withAdmin } from '../../../../hoc/withRole';
-import { Button } from '../../../Button/Button';
+import { Button, ButtonWithAdmin, ButtonWithExecuter } from '../../../Button/Button';
 import { SelectListExecutersWithAdmin, SelectListPriorityWithAdmin } from '../../../../containers/SelectList/SelectListContainer';
 import { CountExecutersWithAdmin } from '../CountExecuters/CountExecuters';
 
 
 export const BtnsForFree = ({ handleBtns, data, existExecutersList }) => {
-    const ButtonWithAdmin = withAdmin(Button);
 
     return (
         <>
-            <Button
+            <ButtonWithExecuter
                 title="Принять"
                 click={handleBtns.accept}
             />
