@@ -16,9 +16,9 @@ class MenuListContainer extends Component {
     getMenuList = () => {
         const { role } = this.props;
 
-        return this.appList.map(item => {
-            if (item.forRole !== role && item.forRole) return;
+        const filteredItemList = this.appList.filter(item => item.forRole === role || !item.forRole)
 
+        return filteredItemList.map(item => {
             return (
                 <MenuItemContainer
                     {...item}
