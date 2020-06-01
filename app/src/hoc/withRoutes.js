@@ -6,6 +6,7 @@ import { menuTitleList } from '../service/menuTitleList';
 import { ReportPage } from '../components/Page/ReportPage/ReportPage';
 import { LoginPage } from '../components/Page/LoginPage/LoginPage';
 import { store } from '../stores/stores';
+import { selectorsUser } from '../selectors/user';
 
 
 export const withRoutes = (WrappedComponent) => {
@@ -13,7 +14,7 @@ export const withRoutes = (WrappedComponent) => {
     return class extends Component {
         constructor(props) {
             super(props);
-            this.state = { isLogin: false }
+            this.state = { isLogin: false, role: '' }
             this._isMounted = false;
         }
 
@@ -34,11 +35,15 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         updateLoginStatus = () => {
-            const isReduxLogin = store.getState().user.isLogin;
+            const isReduxLogin = selectorsUser.status(store.getState());
+            const isReduxRole = selectorsUser.role(store.getState());
             const { isLogin } = this.state;
 
             if (isReduxLogin === isLogin) return;
-            if (this._isMounted) this.setState({ isLogin: isReduxLogin });
+            if (this._isMounted) this.setState({
+                isLogin: isReduxLogin,
+                role: isReduxRole
+            });
         }
 
 
@@ -71,6 +76,9 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         otherRoutes = () => {
+            const { role } = this.state;
+            if (role !== 'Administrator') return;
+
             const reports = this.routeConstructor(linker('Отчёты'), ReportPage);
 
             return [reports];
