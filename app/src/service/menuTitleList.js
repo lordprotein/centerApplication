@@ -17,6 +17,7 @@ export const menuTitleList = [
     },
     {
         titleMenu: 'Отчёты',
-        status: null
+        status: null,
+        forRole: 'Administrator'
     }
 ];

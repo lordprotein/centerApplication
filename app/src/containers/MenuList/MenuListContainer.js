@@ -3,6 +3,8 @@ import { MenuList } from '../../components/MenuList/MenuList';
 import MenuItemContainer from './MenuItem/MenuItemContainer';
 import uniqid from 'uniqid';
 import { menuTitleList } from '../../service/menuTitleList';
+import { connect } from 'react-redux';
+import { selectorsUser } from '../../selectors/user';
 
 
 class MenuListContainer extends Component {
@@ -12,7 +14,11 @@ class MenuListContainer extends Component {
     }
 
     getMenuList = () => {
+        const { role } = this.props;
+
         return this.appList.map(item => {
+            if (item.forRole !== role && item.forRole) return;
+
             return (
                 <MenuItemContainer
                     {...item}
@@ -31,4 +37,12 @@ class MenuListContainer extends Component {
     }
 }
 
-export default MenuListContainer;
+
+const mapStateToProps = state => {
+    return {
+        role: selectorsUser.role(state)
+    }
+}
+
+
+export default connect(mapStateToProps, null)(MenuListContainer);
