@@ -75,9 +75,16 @@ Application.updatePriority = (req, result) => {
 Application.updateStatus = (req, result) => {
     const { status } = req.body;
     const { id } = req.params;
-    const varList = [status, id];
 
-    db.query('UPDATE applications SET status=? WHERE ID=?', varList, (err, res) => {
+    const dateObj = new Date();
+
+    let currDate = '0000.00.00';
+
+    if (status === 'completed') {
+        currDate = `${dateObj.getFullYear()}.${dateObj.getMonth()}.${dateObj.getDay()}`;
+    }
+
+    db.query('UPDATE applications SET status=?, date_end = ? WHERE ID=?', [status, currDate, id], (err, res) => {
         if (err) return result(err, null);
 
         result(null, res);

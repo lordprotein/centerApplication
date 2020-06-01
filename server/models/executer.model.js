@@ -76,10 +76,18 @@ Executer.create = (req, result) => {
             if (err) return result(err, null);
 
             const currCountExecuters = res[0].current_count_executers + 1;
+            const dateObj = new Date();
+            let currDate = '0000.00.00';
 
-            if (currCountExecuters < res[0].count_executer) status = 'pending';
 
-            db.query('UPDATE applications SET status = ?, current_count_executers = ? WHERE ID = ?', [status, currCountExecuters, id_application], (err, res) => {
+            if (currCountExecuters < res[0].count_executer) {
+                status = 'pending';
+            }
+            else {
+                currDate = `${dateObj.getFullYear()}.${dateObj.getMonth()}.${dateObj.getDay()}`;
+            }
+
+            db.query('UPDATE applications SET status = ?, current_count_executers = ?, date_start = ? WHERE ID = ?', [status, currCountExecuters, currDate, id_application], (err, res) => {
                 if (err) return result(err, null);
 
                 result(null, { status: 'successful' });
@@ -102,7 +110,7 @@ Executer.delete = (req, result) => {
 
             status = ((status === 'process' || status === 'pending') && currCountExecuters !== 0) ? 'pending' : 'free';
 
-            db.query('UPDATE applications SET status=?, current_count_executers=? WHERE ID=?', [status, currCountExecuters, appID], (err, res) => {
+            db.query('UPDATE applications SET status=?, current_count_executers=?, date_start = ? WHERE ID=?', [status, currCountExecuters, '0000.00.00', appID], (err, res) => {
                 if (err) return result(err, null);
 
                 return result(null, { status: 'successful' });
