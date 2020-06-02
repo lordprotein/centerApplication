@@ -1,32 +1,29 @@
 import React from 'react';
 import uniqid from 'uniqid';
-import SelectListContainer from '../../../containers/SelectList/SelectListContainer';
+import SelectListContainer, { SelectListExecuters } from '../../../containers/SelectList/SelectListContainer';
 import { selectorsUser } from '../../../selectors/user';
 import { store } from '../../../stores/stores';
 import { dateNormalize } from '../../../service/normalizeFunctions';
 import styles from './ReportItem.module.css';
+import { CalendarInterval } from '../CalendarInterval/CalendarInterval';
 
 
 export const ReportForCompletedStatus = ({ title, getExecuterReport, children, handleDate }) => {
-    const userList = selectorsUser.existExecuters(store.getState()).map(item => { return { title: item.full_name, value: item.ID } })
 
     return (
         <div>
             <h2>{title}</h2>
 
-            <SelectListContainer list={userList} title='Выберите исполнителя'>
+            <SelectListExecuters
+                title='Назначить исполнителем'
+            >
                 {value => getExecuterReport(value)}
-            </SelectListContainer>
+            </SelectListExecuters>
 
-            <label htmlFor='date_start'>
-                <span>С: </span>
-                <input type='date' onChange={handleDate.getStartDate} id='date_start' />
-            </label>
-            <label htmlFor='date_end'>
-                <span>По: </span>
-
-                <input type='date' onChange={handleDate.getEndDate} id='date_end' />
-            </label>
+            <CalendarInterval
+                getStartDate={handleDate.getStartDate}
+                getEndDate={handleDate.getEndDate}
+            />
 
             {
                 children.length
@@ -43,8 +40,6 @@ export const ReportForCompletedStatus = ({ title, getExecuterReport, children, h
                             </thead>
                             <tbody>
                                 {children.map(item => {
-                                    console.log(item)
-
                                     return (
                                         <tr key={uniqid()}>
                                             <td>{item.executer_name}</td>
