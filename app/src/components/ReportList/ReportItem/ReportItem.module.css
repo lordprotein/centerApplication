@@ -1,0 +1,14 @@
+.table {
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.table tr td {
+    border: 1px solid #b6bacc;
+    padding: 6px;
+    color: #2e2e2e;
+}
+
+.table thead td {
+    background: #ecf0ff;
+}
