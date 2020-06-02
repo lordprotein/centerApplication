@@ -76,9 +76,9 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         otherRoutes = () => {
-            const { role } = this.state;
-            if (role !== 'Administrator') return;
-
+            // const { role } = this.state;
+            // if (role !== 'Administrator') return;
+            
             const reports = this.routeConstructor(linker('Отчёты'), ReportPage);
 
             return [reports];
@@ -92,13 +92,13 @@ export const withRoutes = (WrappedComponent) => {
 
         render() {
             const { isLogin } = this.state;
-
+            
             return (
                 <Switch>
                     <Redirect exact from='/' to='/login' />
                     {isLogin && <Redirect from='/login' to={linker('свободные')} />}
                     {isLogin && this.getListRoutes()}
-                    {isLogin && this.otherRoutes()}
+                    {this.otherRoutes()}
                     {this.loginRoute()}
                 </Switch>
             )
