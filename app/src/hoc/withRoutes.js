@@ -14,12 +14,13 @@ export const withRoutes = (WrappedComponent) => {
     return class extends Component {
         constructor(props) {
             super(props);
-            this.state = { isLogin: false, role: '' }
+            this.state = { isLogin: false, role: false }
             this._isMounted = false;
         }
 
         componentDidMount = () => {
             this._isMounted = true;
+            this.updateLoginStatus();
             this.subscriber();
         }
 
@@ -40,7 +41,9 @@ export const withRoutes = (WrappedComponent) => {
             const { isLogin } = this.state;
 
             if (isReduxLogin === isLogin) return;
-            if (this._isMounted) this.setState({
+            if (!this._isMounted) return;
+
+            this.setState({
                 isLogin: isReduxLogin,
                 role: isReduxRole
             });
@@ -76,8 +79,8 @@ export const withRoutes = (WrappedComponent) => {
         }
 
         otherRoutes = () => {
-            // const { role } = this.state;
-            // if (role !== 'Administrator') return;
+            const { role } = this.state;
+            if (role !== 'Administrator') return;
             
             const reports = this.routeConstructor(linker('Отчёты'), ReportPage);
 
@@ -98,7 +101,7 @@ export const withRoutes = (WrappedComponent) => {
                     <Redirect exact from='/' to='/login' />
                     {isLogin && <Redirect from='/login' to={linker('свободные')} />}
                     {isLogin && this.getListRoutes()}
-                    {this.otherRoutes()}
+                    {isLogin && this.otherRoutes()}
                     {this.loginRoute()}
                 </Switch>
             )
