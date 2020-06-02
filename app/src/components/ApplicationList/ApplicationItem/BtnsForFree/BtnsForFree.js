@@ -21,9 +21,11 @@ export const BtnsForFree = ({ handleBtns, data, existExecutersList }) => {
             <SelectListPriorityWithAdmin handleSelect={handleBtns} />
 
             <SelectListExecutersWithAdmin
-                handleSelect={handleBtns}
                 existExecutersList={existExecutersList}
-            />
+                title='Назначить исполнителем'
+            >
+                {(value) => handleBtns.addOneMoreExecuter(value)}
+            </SelectListExecutersWithAdmin>
 
             <CountExecutersWithAdmin handleChange={handleBtns} />
         </>

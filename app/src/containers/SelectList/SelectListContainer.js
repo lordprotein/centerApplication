@@ -25,21 +25,21 @@ class SelectListContainer extends Component {
 export default SelectListContainer;
 
 
-export const SelectListExecutersWithAdmin = ({ existExecutersList, handleSelect }) => {
-    const { addOneMoreExecuter } = handleSelect;
+export const SelectListExecutersWithAdmin = ({ existExecutersList, title = '', children }) => {
     const NewComponent = withAdmin(SelectListContainer);
+    const executersList = existExecutersList.map(({ full_name, ID }) => {
+        return {
+            title: full_name,
+            value: ID
+        }
+    })
 
     return (
         <NewComponent
-            list={existExecutersList.map(({ full_name, ID }) => {
-                return {
-                    title: full_name,
-                    value: ID
-                }
-            })}
-            title={'Назначить исполнителем'}
+            list={executersList}
+            title={title}
         >
-            {(value) => addOneMoreExecuter(value)}
+            {children}
         </NewComponent>
     );
 }
