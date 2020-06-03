@@ -6,7 +6,7 @@ export const CountExecuters = ({ handleChange }) => {
     const { setCountExecuter } = handleChange;
 
     return (
-        <input type="number" onChange={setCountExecuter} />
+        <input type="number" onChange={setCountExecuter} placeholder='Кол-во исполнителей' />
     );
 }
 

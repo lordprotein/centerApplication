@@ -10,9 +10,9 @@ export const ButtonAddApplication = () => {
 }
 
 
-export const Button = ({ title, click, styles }) => {
+export const Button = ({ title, click }) => {
     return (
-        <button onClick={click}>{title}</button>
+        <button onClick={click} className={styles.btn}>{title}</button>
     );
 }
 

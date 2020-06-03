@@ -1,3 +1,21 @@
+.btn {
+    margin: 3px;
+    padding: 4px 15px;
+    background: #4259c1;
+    color: #fff;
+    outline: none;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    transition:  background 0.1s;
+}
+
+.btn:hover {
+    background: #7a92ff;
+    transition:  background 0.1s;
+
+}
+
 .btnAddApplication {
     margin: 30px 0;
     width: 40px;

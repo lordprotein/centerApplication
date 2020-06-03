@@ -1,8 +1,6 @@
 import React from 'react';
 import uniqid from 'uniqid';
-import SelectListContainer, { SelectListExecuters } from '../../../containers/SelectList/SelectListContainer';
-import { selectorsUser } from '../../../selectors/user';
-import { store } from '../../../stores/stores';
+import { SelectListExecuters } from '../../../containers/SelectList/SelectListContainer';
 import { dateNormalize } from '../../../service/normalizeFunctions';
 import styles from './ReportItem.module.css';
 import { CalendarInterval } from '../CalendarInterval/CalendarInterval';

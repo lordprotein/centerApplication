@@ -8,31 +8,35 @@ export const BtnsForPending = ({ handleBtns, data, existExecutersList }) => {
 
     return (
         <>
-            <ButtonWithExecuter
-                title="Принять"
-                click={handleBtns.accept}
-            />
+            <div>
+                <ButtonWithExecuter
+                    title="Принять"
+                    click={handleBtns.accept}
+                />
 
-            <ButtonWithAdmin
-                title="Удалить"
-                click={handleBtns.remove}
-            />
+                <ButtonWithAdmin
+                    title="Удалить"
+                    click={handleBtns.remove}
+                />
 
-            <ButtonWithExecuter
-                title="Отказаться"
-                click={handleBtns.reset}
-            />
+                <ButtonWithExecuter
+                    title="Отказаться"
+                    click={handleBtns.reset}
+                />
+            </div>
 
-            <SelectListPriorityWithAdmin handleSelect={handleBtns} />
+            <div>
+                <SelectListPriorityWithAdmin handleSelect={handleBtns} />
 
-            <SelectListExecutersWithAdmin
-                existExecutersList={existExecutersList}
-                title='Назначить исполнителем'
-            >
-                {(value) => handleBtns.addOneMoreExecuter(value)}
-            </SelectListExecutersWithAdmin>
+                <SelectListExecutersWithAdmin
+                    existExecutersList={existExecutersList}
+                    title='Назначить исполнителем'
+                >
+                    {(value) => handleBtns.addOneMoreExecuter(value)}
+                </SelectListExecutersWithAdmin>
 
-            <CountExecutersWithAdmin handleChange={handleBtns} />
+                <CountExecutersWithAdmin handleChange={handleBtns} />
+            </div>
         </>
     );
 }
