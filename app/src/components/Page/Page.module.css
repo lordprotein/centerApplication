@@ -5,8 +5,9 @@
     background: #f9faff;
 }
 
-.titlePage {
-    font-size: 22px;
+.title {
+    margin-bottom: 20px;
+    font-size: 25px;
     font-weight: bold;
-    color: #1e2432;
+    color: #1f295a;
 }
