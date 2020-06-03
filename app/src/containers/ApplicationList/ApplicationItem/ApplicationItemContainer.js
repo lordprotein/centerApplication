@@ -51,6 +51,9 @@ class ApplicationItemContainer extends Component {
 
 
     handleAccept = () => {
+        const check = window.confirm('Подтвердите принятие заявки');
+        if (!check) return;
+        
         const { data: { id }, removeApplication, userID } = this.props;
 
         service.postAcceptApp(userID, id)
@@ -59,6 +62,9 @@ class ApplicationItemContainer extends Component {
 
 
     handleReset = () => {
+        const check = window.confirm('Подтвердите отказ от заявки');
+        if (!check) return;
+        
         const { data: { id }, removeApplication, userID } = this.props;
 
         service.resetAppOfExecuter(userID, id)
@@ -67,6 +73,9 @@ class ApplicationItemContainer extends Component {
 
 
     handleRemove = () => {
+        const check = window.confirm('Подтвердите удаление');
+        if (!check) return;
+        
         const { data: { id }, removeApplication } = this.props;
 
         service.removeAppItem(id)
@@ -74,6 +83,9 @@ class ApplicationItemContainer extends Component {
     }
 
     handleComplete = () => {
+        const check = window.confirm('Подтвердите завершение заявки');
+        if (!check) return;
+        
         const { data: { id }, removeApplication } = this.props;
 
         service.toCompleteApp(id)
@@ -129,11 +141,14 @@ class ApplicationItemContainer extends Component {
 
 
     handleRemoveExecuter = (userID) => {
+        const check = window.confirm('Подтвердите удаление');
+        if (!check) return;
+
         const { data: { id }, removeApplication } = this.props,
             { executerList, currCountExecuters, currStatus } = this.state;
 
         const newExecutersList = executerList.filter(executer => executer.ID !== userID);
-        
+
         service.resetAppOfExecuter(userID, id).then(() => {
             if (!newExecutersList.length && currStatus !== 'free' && currStatus !== 'pending') return removeApplication(id);
 
@@ -178,7 +193,7 @@ class ApplicationItemContainer extends Component {
         const { data } = this.props;
         const { isOpen, executerList, currCountExecuters, countExecuter, currStatus } = this.state;
         const updatedData = { ...data, executerList, currCountExecuters, countExecuter, currStatus };
-        
+
         return (
             <ApplicationItem
                 data={updatedData}
