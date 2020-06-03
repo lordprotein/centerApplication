@@ -22,15 +22,15 @@ class ApplicationListContainer extends Component {
             updateTitleOfPage,
             userID,
             statusPage,
-            titlePage
+            titlePage,
+            isAdmin
         } = this.props;
 
-        service.getApplList(statusPage, userID)
-            .then(res => {
-                setAppList(res);
-                updateTitleOfPage(titlePage)
-                updateStatusLoad(false);
-            });
+        service.getApplList(statusPage, userID, isAdmin).then(res => {
+            setAppList(res);
+            updateTitleOfPage(titlePage)
+            updateStatusLoad(false);
+        });
     }
 
 
@@ -68,7 +68,8 @@ const mapStateToProps = state => {
     return {
         appList: selectorApp.list(state),
         statusLoad: selectorsLoad.status(state),
-        userID: selectorsUser.id(state)
+        userID: selectorsUser.id(state),
+        isAdmin: selectorsUser.role(state) !== 'Administrator' ? false : true,
     };
 }
 

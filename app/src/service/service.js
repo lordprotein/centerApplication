@@ -41,8 +41,12 @@ class Service extends BaseFuncService {
         return normalizeApp(res);
     }
 
-    getApplList = async (status, userID) => {
-        const res = await this.getResource(`/executer/application/list/${status}/${userID}`);
+    getApplList = async (status, userID, isAdmin) => {
+        const path = isAdmin
+            ? `/application/list/${status}`
+            : `/executer/application/list/${status}/${userID}`;
+            
+        const res = await this.getResource(path);
         return normalizeApp(res);
     }
 
