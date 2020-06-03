@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { ReportForCompletedStatus } from '../../../components/ReportList/ReportItem/ReportItem';
 import { service } from '../../../service/service';
+import { dateNormalize } from '../../../service/normalizeFunctions';
 
 
 export class ReportItemWithStatus extends Component {
@@ -15,11 +16,11 @@ export class ReportItemWithStatus extends Component {
         const { value } = e.target;
         const { data } = this.state;
 
-        const selectedDate = new Date(value);
+        const selectedDate = new Date(value); //Selected date
 
         const newData = data.filter(({ date_end }) => {
-            const dateEnd = new Date(date_end);
-            return selectedDate < dateEnd;
+            const dateEnd =  new Date(date_end); //Date of app
+            return (selectedDate < dateEnd || date_end > this.state.dateEnd) || dateNormalize(selectedDate) === dateNormalize(date_end);
         })
 
         this.setState({
@@ -33,21 +34,27 @@ export class ReportItemWithStatus extends Component {
         const { filteredData, data, dateStart } = this.state;
 
         const needDate = new Date(value)
-        const arrayData = filteredData && dateStart ? filteredData : data;
-
-        const newData = arrayData.filter(({ date_end }) => {
+        console.log(filteredData, data)
+        // const arrayData = (filteredData.length && dateStart) ? filteredData : data;
+        // console.warn(arrayData)
+        const newData = data.filter(({ date_end }) => {
             const dateEnd = new Date(date_end);
 
-            return needDate > dateEnd;
+            console.log(needDate > dateEnd, dateStart > dateEnd)
+            
+            return needDate > dateEnd && dateStart < dateEnd;
         })
 
-        console.log(newData)
-        this.setState({ filteredData: newData })
+        // console.log(newData)
+        this.setState({
+            filteredData: newData,
+            dateEnd: needDate
+        })
     }
 
     getList = (id) => {
         const { status } = this.props;
-        
+
         service.getReportAppWithStatus(status, id).then(data => this.setState({ data, filteredData: false }));
     }
 
