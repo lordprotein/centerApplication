@@ -30,11 +30,13 @@ class LoginContainer extends Component {
     successfulAuth = (data, history) => {
         const { doLogin } = this.props;
 
+        
         doLogin(data);
-
+        
         myCookieUser.set({ ...data });
         myCookieIsLogin.set(true);
-
+        
+        if (data.role === 'User') return history.push('/application/add')
         history.push(linker('Свободные'))
     }
 

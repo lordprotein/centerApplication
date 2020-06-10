@@ -9,7 +9,7 @@ import { selectorsUser } from '../../selectors/user';
 class SidebarContainer extends Component {
 
     render() {
-        const { isLogin } = this.props;
+        const { isLogin, userRole } = this.props;
 
         return (
             <Sidebar>
@@ -17,7 +17,7 @@ class SidebarContainer extends Component {
                     ? (
                         <>
                             <UserInfoContainer />
-                            <MenuListContainer />
+                            {userRole !== 'User' ? <MenuListContainer /> : false}
                         </>
                     )
                     :
@@ -31,7 +31,8 @@ class SidebarContainer extends Component {
 
 const mapStateToProps = state => {
     return {
-        isLogin: selectorsUser.status(state)
+        isLogin: selectorsUser.status(state),
+        userRole: selectorsUser.role(state)
     }
 }
 

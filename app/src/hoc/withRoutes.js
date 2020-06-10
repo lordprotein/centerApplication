@@ -100,18 +100,35 @@ export const withRoutes = (WrappedComponent) => {
             return [page];
         }
 
+        renderForMain = () => {
+            const { isLogin, role } = this.state;
 
+            if (!isLogin || role === 'User') return;
+
+            return (
+                <>
+                    {<Redirect from='/login' to={linker('свободные')} />}
+                    {this.getListRoutes()}
+                    {this.otherRoutes()}
+                    {this.addAppPage()}
+                </>
+            );
+        }
+
+        generatePageAddApplication = () => {
+            const { isLogin, role } = this.state;
+
+            if (isLogin && role === 'User') return this.addAppPage();
+        }
+        
         render() {
-            const { isLogin } = this.state;
 
             return (
                 <Switch>
                     <Redirect exact from='/' to='/login' />
-                    {isLogin && <Redirect from='/login' to={linker('свободные')} />}
-                    {isLogin && this.getListRoutes()}
-                    {isLogin && this.otherRoutes()}
-                    {isLogin && this.addAppPage()}
+                    {this.renderForMain()}
                     {this.loginRoute()}
+                    {this.generatePageAddApplication()}
                 </Switch>
             )
         }
