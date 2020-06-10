@@ -7,6 +7,7 @@ import { ReportPage } from '../components/Page/ReportPage/ReportPage';
 import { LoginPage } from '../components/Page/LoginPage/LoginPage';
 import { store } from '../stores/stores';
 import { selectorsUser } from '../selectors/user';
+import { AddApplicationPage } from '../components/Page/AddApplicationPage/AddApplicationPage';
 
 
 export const withRoutes = (WrappedComponent) => {
@@ -81,27 +82,35 @@ export const withRoutes = (WrappedComponent) => {
         otherRoutes = () => {
             const { role } = this.state;
             if (role !== 'Administrator') return;
-            
+
             const reports = this.routeConstructor(linker('Отчёты'), ReportPage);
 
             return [reports];
         }
 
         loginRoute = () => {
-            const login = this.routeConstructor('/login', LoginPage);
-            return [login];
+            const page = this.routeConstructor('/login', LoginPage);
+
+            return [page];
+        }
+
+        addAppPage = () => {
+            const page = this.routeConstructor('/application/add', AddApplicationPage);
+
+            return [page];
         }
 
 
         render() {
             const { isLogin } = this.state;
-            
+
             return (
                 <Switch>
                     <Redirect exact from='/' to='/login' />
                     {isLogin && <Redirect from='/login' to={linker('свободные')} />}
                     {isLogin && this.getListRoutes()}
                     {isLogin && this.otherRoutes()}
+                    {isLogin && this.addAppPage()}
                     {this.loginRoute()}
                 </Switch>
             )

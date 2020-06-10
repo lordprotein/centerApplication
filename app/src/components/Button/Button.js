@@ -1,11 +1,12 @@
 import React from 'react';
 import styles from './Button.module.css';
 import { withAdmin, withExecuter } from '../../hoc/withRole';
+import { Link } from 'react-router-dom';
 
 
 export const ButtonAddApplication = () => {
     return (
-        <button className={styles.btnAddApplication}></button>
+        <Link to='application/add' ><button className={styles.btnAddApplication}></button></Link>
     );
 }
 

@@ -45,7 +45,7 @@ class Service extends BaseFuncService {
         const path = isAdmin
             ? `/application/list/${status}`
             : `/executer/application/list/${status}/${userID}`;
-            
+
         const res = await this.getResource(path);
         return normalizeApp(res);
     }
@@ -69,6 +69,21 @@ class Service extends BaseFuncService {
     }
 
     //Post
+
+    addApplication = data => {
+        const date = new Date();
+        const currDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`;
+        data = {
+            ...data,
+            ID: uniqid(),
+            date: currDate,
+            phone: data.phone.replace(/[- )(]/g, '')
+        };
+        console.log(data)
+
+        return this.methodRequset(`/application`, 'POST', data);
+
+    }
 
     postAcceptApp = (id_executer, id_application) => {
         const data = {
