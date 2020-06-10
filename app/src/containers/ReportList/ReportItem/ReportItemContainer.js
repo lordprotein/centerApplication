@@ -19,7 +19,7 @@ export class ReportItemWithStatus extends Component {
         const selectedDate = new Date(value); //Selected date
 
         const newData = data.filter(({ date_end }) => {
-            const dateEnd =  new Date(date_end); //Date of app
+            const dateEnd = new Date(date_end); //Date of app
             return (selectedDate < dateEnd || date_end > this.state.dateEnd) || dateNormalize(selectedDate) === dateNormalize(date_end);
         })
 
@@ -31,21 +31,15 @@ export class ReportItemWithStatus extends Component {
 
     getEndDate = e => {
         const { value } = e.target;
-        const { filteredData, data, dateStart } = this.state;
+        const { data, dateStart } = this.state;
 
         const needDate = new Date(value)
-        console.log(filteredData, data)
-        // const arrayData = (filteredData.length && dateStart) ? filteredData : data;
-        // console.warn(arrayData)
         const newData = data.filter(({ date_end }) => {
             const dateEnd = new Date(date_end);
 
-            console.log(needDate > dateEnd, dateStart > dateEnd)
-            
             return needDate > dateEnd && dateStart < dateEnd;
         })
 
-        // console.log(newData)
         this.setState({
             filteredData: newData,
             dateEnd: needDate

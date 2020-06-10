@@ -79,7 +79,6 @@ class Service extends BaseFuncService {
             date: currDate,
             phone: data.phone.replace(/[- )(]/g, '')
         };
-        console.log(data)
 
         return this.methodRequset(`/application`, 'POST', data);
 

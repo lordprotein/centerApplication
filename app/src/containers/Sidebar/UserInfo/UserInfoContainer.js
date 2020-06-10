@@ -8,7 +8,7 @@ class UserInfoContainer extends Component {
 
     render() {
         const { role, name } = this.props;
-        // console.log(role, name)
+        
         return (
             <UserInfo
                 name={name}

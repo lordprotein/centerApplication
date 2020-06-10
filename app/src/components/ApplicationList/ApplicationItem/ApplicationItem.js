@@ -11,7 +11,7 @@ import { BtnRemoveExecuter } from './BtnRemoveExecuter/BtnRemoveExecuter';
 
 
 export const ApplicationItem = (props) => {
-    console.log(props)
+    
     const { handleClick, isOpen, data } = props,
         {
             date,
