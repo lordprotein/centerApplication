@@ -53,23 +53,27 @@ export const ApplicationItem = (props) => {
 
 const MoreInfo = (props) => {
     const { data, handleBtns, existExecutersList } = props;
-    const { task, name, phone, executerList, status } = data;
+    const { task, name, phone, executerList, status, caseNum } = data;
 
     return (
         <div className={styles.moreInfo}>
             <table className={styles.infoTable}>
                 <tbody>
                     <tr>
-                        <td>Задача</td>
-                        <td>{task}</td>
-                    </tr>
-                    <tr>
                         <td>ФИО заявителя</td>
                         <td>{name}</td>
                     </tr>
                     <tr>
+                        <td>Номер корпуса</td>
+                        <td>{caseNum}</td>
+                    </tr>
+                    <tr>
                         <td>Номер телефона</td>
                         <td>{phone}</td>
+                    </tr>
+                    <tr>
+                        <td>Задача</td>
+                        <td>{task}</td>
                     </tr>
                     {executerList.length
                         ?
