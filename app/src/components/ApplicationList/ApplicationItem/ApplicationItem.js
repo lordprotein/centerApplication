@@ -37,11 +37,11 @@ export const ApplicationItem = (props) => {
                 {/* <div className={styles.title}>
                     <input type='checkbox' />
                 </div> */}
-                <div className={styles.title}>{shortTask}</div>
-                <div className={styles.title}>{normalizeDate}</div>
-                <div className={styles.title}>{shortName}</div>
-                <div className={styles.title}>{executersWord}</div>
-                <div className={styles.title}>{priorityWord}</div>
+                <div className={styles.titleTask}>{shortTask}</div>
+                <div className={styles.titleDate}>{normalizeDate}</div>
+                <div className={styles.titleName}>{shortName}</div>
+                <div className={styles.titleExecuters}>{executersWord}</div>
+                <div className={styles.titlePriority}>{priorityWord}</div>
                 <div className={statusStyles}>{transformStatus}</div>
             </div>
             {isOpen && <MoreInfo {...props} />}
@@ -57,7 +57,7 @@ const MoreInfo = (props) => {
 
     return (
         <div className={styles.moreInfo}>
-            <table>
+            <table className={styles.infoTable}>
                 <tbody>
                     <tr>
                         <td>Задача</td>
@@ -77,7 +77,7 @@ const MoreInfo = (props) => {
                             <tr>
                                 <td>Список исполнителей</td>
                                 <td>
-                                    <table>
+                                    <table className={styles.exeutersTable}>
                                         <tbody>
                                             {executerList.map(item => <tr key={uniqid()}><td>{item.full_name}</td><td>{status !== 'completed' ? <BtnRemoveExecuter handleBtns={handleBtns} ID={item.ID} /> : false}</td></tr>)}
                                         </tbody>
@@ -90,7 +90,7 @@ const MoreInfo = (props) => {
 
                 </tbody>
             </table>
-            <div className={styles.btns}>
+            <div style={{margin: '20px 0'}}>
                 {statusProps(data).btnList(handleBtns, existExecutersList)}
             </div>
         </div>
@@ -105,7 +105,7 @@ const statusProps = (data) => {
         case menuTitleList[0].status: {
             return {
                 title: 'Свободно',
-                styles: `${styles.title} ${styles.statusFree}`,
+                styles: `${styles.titleStatus} ${styles.statusFree}`,
                 btnList: (handleBtns, existExecutersList) => btnListFree(handleBtns, data, existExecutersList)
             }
         }
@@ -113,7 +113,7 @@ const statusProps = (data) => {
         case menuTitleList[1].status: {
             return {
                 title: 'В процессе',
-                styles: `${styles.title} ${styles.statusProcess}`,
+                styles: `${styles.titleStatus} ${styles.statusProcess}`,
                 btnList: (handleBtns, existExecutersList) => btnListProcess(handleBtns, data, existExecutersList)
             }
         }
@@ -121,15 +121,15 @@ const statusProps = (data) => {
         case menuTitleList[2].status: {
             return {
                 title: 'Завершено',
-                styles: `${styles.title} ${styles.statusCompleted}`,
+                styles: `${styles.titleStatus} ${styles.statusCompleted}`,
                 btnList: () => { }
             }
         }
 
         case menuTitleList[3].status: {
             return {
-                title: `Идёт набор ...`,
-                styles: `${styles.title} ${styles.statusFree}`,
+                title: `Идёт набор`,
+                styles: `${styles.titleStatus} ${styles.statusFree}`,
                 btnList: (handleBtns, existExecutersList) => btnListPending(handleBtns, data, existExecutersList)
             }
         }

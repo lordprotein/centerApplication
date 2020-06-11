@@ -13,17 +13,42 @@
     cursor: pointer;
 }
 
-.title {
+.titleTask, .titleDate, .titleName, .titleExecuters, .titlePriority, .titleStatus {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 2px 5px;
     color: #3f4558;
+    font-size: 15px;
     font-weight: 700;
+    word-break: break-all;
 }
 
-.title:not(:first-of-type) {
+.titleTask {
     width: 20%;
+}
+
+.titleDate {
+    width: 90px;
+}
+
+.titleName {
+    width: 25%;
+}
+
+.titleExecuters {
+    width: 10%;
+}
+
+.titlePriority {
+    width: 80px;
+}
+
+.titleStatus {
+    width: 20%;
+    display: block;
+    text-align: center;
 }
 
 .title:not(:last-of-type)::after {
@@ -56,5 +81,29 @@
 }
 
 .moreInfo table tbody td {
-    padding: 10px 10px 10px 0;
+    /* padding: 10px 30px 10px 0; */
+    color: #2b2b2b;
+    line-height: 160%;
+    /* border-bottom: 1px solid #dddddd; */
+}
+
+.infoTable {
+    width: 100%;
+    border-collapse: collapse;
+} 
+
+.infoTable td {
+    padding: 10px;
+    border: 1px solid #dddddd;
+}
+
+.exeutersTable td {
+    border: none;
+    padding: 0;
+}
+
+@media (max-width: 1300px) {
+    .row div {
+        font-size: 14px;
+    }
 }

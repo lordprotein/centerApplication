@@ -8,12 +8,12 @@ export const ApplicationList = ({ children }) => {
         <div className={styles.appList}>
             <div className={styles.topLine}>
                 <div className={stylesItem.title}><input type='checkbox' /></div>
-                <div className={stylesItem.title}>Задача</div>
-                <div className={stylesItem.title}>Дата</div>
-                <div className={stylesItem.title}>Фио</div>
-                <div className={stylesItem.title}>Исполнитель(-ли)</div>
-                <div className={stylesItem.title}>Приоритет</div>
-                <div className={stylesItem.title}>Статус</div>
+                <div className={stylesItem.titleTask}>Задача</div>
+                <div className={stylesItem.titleDate}>Дата</div>
+                <div className={stylesItem.titleName}>Фио</div>
+                <div className={stylesItem.titleExecuters}>Исполнитель(-ли)</div>
+                <div className={stylesItem.titlePriority}>Приоритет</div>
+                <div className={stylesItem.titleStatus}>Статус</div>
             </div>
             {children}
         </div>
