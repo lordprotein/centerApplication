@@ -4,11 +4,11 @@ import { menuTitleList } from './menuTitleList';
 
 class BaseFuncService {
     constructor() {
-        this.domen = 'http://localhost:3000';
+        this.domain = 'http://localhost:3000';
     }
 
     getResource = async (url = '', objReq = {}) => {
-        const response = await fetch(`${this.domen}/${url}`, objReq);
+        const response = await fetch(`${this.domain}/${url}`, objReq);
 
         if (!response.ok) {
             throw response.status;
@@ -30,8 +30,8 @@ class BaseFuncService {
 
 
 class Service extends BaseFuncService {
-    // constructor(domen) {
-    // super(domen);
+    // constructor(domain) {
+    // super(domain);
     // }
 
     //Get
