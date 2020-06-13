@@ -35,7 +35,7 @@ class FormAddApplicationContainer extends Component {
         service.addApplication(data).then(
             () => {
                 alert('Заявка отправлена');
-                // history.push('/');
+                history.push('/');
             },
             (err) => console.log(err)
         );
