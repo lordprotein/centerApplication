@@ -11,8 +11,8 @@ import { myCookieUser, myCookieIsLogin } from '../../service/myCookie';
 
 class LoginContainer extends Component {
     state = {
-        login: 'christmas3',
-        password: 'maro',
+        login: '',
+        password: '',
         errorText: ''
     }
 
