@@ -33,8 +33,7 @@ export const SelectListExecuters = ({ existExecutersList, title = '', children }
     
     
     if (existExecutersList) {
-        executersList = existExecutersList.filter(({ full_name, ID }) => {
-            
+        executersList = existExecutersList.map(({ full_name, ID }) => {
             return {
                 title: full_name,
                 value: ID
