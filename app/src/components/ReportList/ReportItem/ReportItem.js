@@ -10,18 +10,28 @@ export const ReportForCompletedStatus = ({ title, getExecuterReport, children, h
 
     return (
         <div>
-            <h2>{title}</h2>
+            <h2 className={styles.title}>{title}</h2>
 
             <SelectListExecuters
-                title='Назначить исполнителем'
+                title='Выбрать исполнителя'
             >
                 {value => getExecuterReport(value)}
             </SelectListExecuters>
 
-            <CalendarInterval
-                getStartDate={handleDate.getStartDate}
-                getEndDate={handleDate.getEndDate}
-            />
+            {
+                children.length && (
+                    children[0].status === 'process'
+                        ? false
+                        : (
+                            <div className={styles.wrapCalendar}>
+                            <CalendarInterval
+                                getStartDate={handleDate.getStartDate}
+                                getEndDate={handleDate.getEndDate}
+                            />
+                            </div>
+                        )
+                )
+            }
 
             {
                 children.length
@@ -33,7 +43,8 @@ export const ReportForCompletedStatus = ({ title, getExecuterReport, children, h
                                     <td><b>Исполнитель</b></td>
                                     <td><b>Клиент</b></td>
                                     <td><b>Задача</b></td>
-                                    <td><b>Дата завершения</b></td>
+                                    <td><b>Дата начала</b></td>
+                                    {children[0].status === 'process' ? false : <td><b>Дата завершения</b></td>}
                                 </tr>
                             </thead>
                             <tbody>
@@ -43,8 +54,8 @@ export const ReportForCompletedStatus = ({ title, getExecuterReport, children, h
                                             <td>{item.executer_name}</td>
                                             <td>{item.client_name}</td>
                                             <td>{item.task}</td>
-                                            {/* <td>{dateNormalize(item.date_start)}</td> */}
-                                            <td>{dateNormalize(item.date_end, '.')}</td>
+                                            <td>{dateNormalize(item.date_start, '.')}</td>
+                                            {item.status === 'process' ? false : <td>{dateNormalize(item.date_end, '.')}</td>}
                                         </tr>
                                     )
                                 })}

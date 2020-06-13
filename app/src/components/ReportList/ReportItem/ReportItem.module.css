@@ -1,4 +1,9 @@
+.title {
+    margin: 20px 0;
+}
+
 .table {
+    margin: 20px 0;
     border-spacing: 0;
     border-collapse: collapse;
 }
@@ -11,4 +16,8 @@
 
 .table thead td {
     background: #ecf0ff;
+}
+
+.wrapCalendar {
+    margin: 10px 0;
 }

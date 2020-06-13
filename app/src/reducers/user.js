@@ -43,7 +43,10 @@ const user = (state = initUser, action) => {
         }
 
         case types.SET_EXIST_EXECUTERS: {
-            const { list } = action;
+            let { list } = action;
+            const { ID } = state.userInfo;
+
+            list = list.filter(item => item.full_name !== 'Пользователь' && item.ID !== ID);
 
             return {
                 ...state,

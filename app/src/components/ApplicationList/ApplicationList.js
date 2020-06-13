@@ -7,7 +7,7 @@ export const ApplicationList = ({ children }) => {
     return (
         <div className={styles.appList}>
             <div className={styles.topLine}>
-                <div className={stylesItem.title}><input type='checkbox' /></div>
+                {/* <div className={stylesItem.title}><input type='checkbox' /></div> */}
                 <div className={stylesItem.titleTask}>Задача</div>
                 <div className={stylesItem.titleDate}>Дата</div>
                 <div className={stylesItem.titleName}>Фио</div>
