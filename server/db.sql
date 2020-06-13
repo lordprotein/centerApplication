@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: Jun 13, 2020 at 12:48 PM
+-- Generation Time: Jun 13, 2020 at 07:46 PM
 -- Server version: 10.3.13-MariaDB-log
 -- PHP Version: 7.1.32
 
@@ -50,7 +50,7 @@ CREATE TABLE `applications` (
 INSERT INTO `applications` (`ID`, `date`, `date_start`, `date_end`, `priority`, `full_name`, `case_num`, `task`, `phone_num`, `status`, `count_executer`, `current_count_executers`) VALUES
 ('kbdfs59s', '2020-05-13', '2020-05-06', '0000-00-00', 1, 'Федотов Евгений Борисович', 1, 'Сломался принтер. Что-то скрипит и дымиться внутри при включении', '+79871322456', 'process', 1, 1),
 ('kbdfvbva', '2020-05-13', '0000-00-00', '0000-00-00', 3, 'Ярышкина Ирина Васильевна', 2, 'Не работает проектор. Пишет, что есть подключение, но на движения не реагирует', '+79173132333', 'free', 1, 0),
-('kbdfy19a', '2020-05-13', '0000-00-00', '0000-00-00', 1, 'Алушкина Ксения Андреевна', 1, 'Не включается компьютер. Уже и стучала по нему, но так и не включился. Пришлите человека', '+79175513190', 'free', 1, 0),
+('kbdfy19a', '2020-05-13', '2020-05-06', '0000-00-00', 1, 'Алушкина Ксения Андреевна', 1, 'Не включается компьютер. Уже и стучала по нему, но так и не включился. Пришлите человека', '+79175513190', 'process', 1, 1),
 ('kbdfznxs', '2020-05-13', '2020-05-06', '2020-05-06', 1, 'Петров Павел Евгеньевич', 1, 'Кончилась краска в принтере. Нужно заправить', '+88005553535', 'completed', 1, 1),
 ('kbdg2abw', '2020-05-13', '0000-00-00', '0000-00-00', 1, 'Семенов Геннадий Ашотович ', 2, 'Пришел новый проектор. Помогите настроить и повесить в аудиторию.', '+79199910365', 'pending', 3, 1);
 
@@ -73,7 +73,8 @@ CREATE TABLE `applications_of_executers` (
 INSERT INTO `applications_of_executers` (`ID`, `ID_EXECUTER`, `ID_APPLICATION`) VALUES
 ('kbdgdlta', '9ad94158-c2e3-4aa5-929c-6cdef375587d', 'kbdg2abw'),
 ('kbdge844', '9ad94158-c2e3-4aa5-929c-6cdef375587d', 'kbdfznxs'),
-('kbdgeotk', '9ad94158-c2e3-4aa5-929c-6cdef375587d', 'kbdfs59s');
+('kbdgeotk', '9ad94158-c2e3-4aa5-929c-6cdef375587d', 'kbdfs59s'),
+('kbdvdsfp', '9ad94158-c2e3-4aa5-929c-6cdef375587d', 'kbdfy19a');
 
 -- --------------------------------------------------------
 
@@ -95,7 +96,7 @@ CREATE TABLE `executers` (
 
 INSERT INTO `executers` (`ID`, `login`, `password`, `full_name`, `ID_ROLE`) VALUES
 ('386155e0-ffa7-4baf-adf8-2b88d8455e8e', 'petrShoot', 'efa66a578e1c1af6d6b77a419a95255c', 'Анатольев Петр Семенович', '4bc9554b-868e-4c01-a169-3696185a88d8'),
-('82a7f5f0-94a6-4845-be2f-246d4d1ac9bb', 'lordprotein', 'f519bcff8be73f7baa7123d387778ba0', 'Романов Илья Андреевич', 'd7717aeb-6917-4e96-bb4c-ec3f347498be'),
+('82a7f5f0-94a6-4845-be2f-246d4d1ac9bb', 'sem', 'f519bcff8be73f7baa7123d387778ba0', 'Семечкин Иван Иванович', 'd7717aeb-6917-4e96-bb4c-ec3f347498be'),
 ('9ad94158-c2e3-4aa5-929c-6cdef375587d', 'christmas3', 'b2118f4ef0b03a7f5428eef5f40402a1', 'Марков Александр Грубищев', '4bc9554b-868e-4c01-a169-3696185a88d8'),
 ('dff5142b-3f8a-4b53-b188-ed17ce3399de', 'maroolila56', '6c30734811916b0f0f24a4630b08036f', 'Ланина Мария Сергеевна', '4bc9554b-868e-4c01-a169-3696185a88d8'),
 ('f8b75df4-933d-45cb-b7de-6965ec7f772a', 'user', 'ee11cbb19052e40b07aac0ca060c23ee', 'Пользователь', 'fd0cc654-285e-418f-af1a-00d259fb33b2');
