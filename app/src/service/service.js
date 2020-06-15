@@ -4,7 +4,7 @@ import { menuTitleList } from './menuTitleList';
 
 class BaseFuncService {
     constructor() {
-        this.domain = 'http://localhost:3001';
+        this.domain = 'http://localhost:3000';
     }
 
     getResource = async (url = '', objReq = {}) => {
