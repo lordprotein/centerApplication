@@ -4,7 +4,7 @@ import { menuTitleList } from './menuTitleList';
 
 class BaseFuncService {
     constructor() {
-        this.domain = 'http://localhost:3000';
+        this.domain = 'http://localhost:3001';
     }
 
     getResource = async (url = '', objReq = {}) => {
@@ -37,35 +37,35 @@ class Service extends BaseFuncService {
     //Get
 
     getApplItem = async (id) => {
-        const res = await this.getResource(`/application/${id}`);
+        const res = await this.getResource(`application/${id}`);
         return normalizeApp(res);
     }
 
     getApplList = async (status, userID, isAdmin) => {
         const path = isAdmin
-            ? `/application/list/${status}`
-            : `/executer/application/list/${status}/${userID}`;
+            ? `application/list/${status}`
+            : `executer/application/list/${status}/${userID}`;
 
         const res = await this.getResource(path);
         return normalizeApp(res);
     }
 
     getExecuterList = (appID) => {
-        return this.getResource(`/application/executers/${appID}`);
+        return this.getResource(`application/executers/${appID}`);
     }
 
     getExistExecuters = () => {
-        return this.getResource('/executer');
+        return this.getResource('executer');
     }
 
     getReportAppWithStatus = (status, id = null) => {
-        const path = id ? `/report/status/${status}/${id}` : `/report/status/${status}`;
+        const path = id ? `report/status/${status}/${id}` : `/report/status/${status}`;
 
         return this.getResource(path);
     }
 
     logout = () => {
-        return this.getResource(`/logout`);
+        return this.getResource(`logout`);
     }
 
     //Post
@@ -80,7 +80,7 @@ class Service extends BaseFuncService {
             phone: data.phone.replace(/[- )(]/g, '')
         };
 
-        return this.methodRequset(`/application`, 'POST', data);
+        return this.methodRequset(`application`, 'POST', data);
 
     }
 
@@ -90,34 +90,34 @@ class Service extends BaseFuncService {
             id_application,
         }
 
-        return this.methodRequset(`/executer/application/accept/${id_executer}`, 'POST', data);
+        return this.methodRequset(`executer/application/accept/${id_executer}`, 'POST', data);
     }
 
     login = (login, password) => {
-        return this.methodRequset(`/login`, 'POST', { login, password });
+        return this.methodRequset(`login`, 'POST', { login, password });
     }
     //Update
 
     toCompleteApp = (appID) => {
-        return this.methodRequset(`/application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
+        return this.methodRequset(`application/status/${appID}`, 'PUT', { status: menuTitleList[2].status });
     }
 
     setPriority = (appID, priority) => {
-        return this.methodRequset(`/application/priority/${appID}`, 'PUT', { priority });
+        return this.methodRequset(`application/priority/${appID}`, 'PUT', { priority });
     }
 
     setCountExecuter = (appID, count) => {
-        return this.methodRequset(`/application/count/executer/${appID}`, 'PUT', { count });
+        return this.methodRequset(`application/count/executer/${appID}`, 'PUT', { count });
     }
 
     //Delete
 
     resetAppOfExecuter = (userID, appID) => {
-        return this.methodRequset(`/executer/application/reset/${userID}/${appID}`, 'DELETE');
+        return this.methodRequset(`executer/application/reset/${userID}/${appID}`, 'DELETE');
     }
 
     removeAppItem = (userID) => {
-        return this.methodRequset(`/application/${userID}`, 'DELETE');
+        return this.methodRequset(`application/${userID}`, 'DELETE');
     }
 }
 
